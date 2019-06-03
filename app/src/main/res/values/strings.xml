@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Rs_thamrin</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="GET_SELECTED_ITEM">selected_item</string>
+</resources>
