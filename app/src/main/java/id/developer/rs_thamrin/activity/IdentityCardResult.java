@@ -5,8 +5,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -15,7 +13,6 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import id.developer.rs_thamrin.MainActivity;
 import id.developer.rs_thamrin.R;
 import id.developer.rs_thamrin.adapter.TypeOfIdentityCardAdapter;
 import id.developer.rs_thamrin.api.DataApi;

@@ -1,4 +1,4 @@
-package id.developer.rs_thamrin;
+package id.developer.rs_thamrin.activity;
 
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import id.developer.rs_thamrin.Fragment.LoginFragment;
+import id.developer.rs_thamrin.R;
 
 public class MainActivity extends AppCompatActivity {
 

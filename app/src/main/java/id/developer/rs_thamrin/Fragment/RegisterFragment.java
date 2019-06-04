@@ -17,6 +17,7 @@ import java.util.Calendar;
 
 import id.developer.rs_thamrin.R;
 import id.developer.rs_thamrin.activity.IdentityCardResult;
+import id.developer.rs_thamrin.activity.MainActivity;
 import id.developer.rs_thamrin.model.master.TypeOfIdentityCard;
 
 import static android.support.constraint.Constraints.TAG;
@@ -64,6 +65,8 @@ public class RegisterFragment extends Fragment{
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_register, container, false);
+        ((MainActivity)getActivity()).getSupportActionBar().setTitle("Register");
+        ((MainActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         bindView(view);
 
         birthDate.setOnClickListener(new View.OnClickListener() {
@@ -85,8 +88,13 @@ public class RegisterFragment extends Fragment{
     }
 
     private void bindView(View view) {
+        firstName = (EditText)view.findViewById(R.id.first_name);
+        lastName = (EditText)view.findViewById(R.id.last_name);
+        birthPlace = (EditText)view.findViewById(R.id.birth_place);
         birthDate = (EditText)view.findViewById(R.id.birth_date);
+        identityCard = (EditText)view.findViewById(R.id.identity_card);
         typeOfIdentityCard = (EditText)view.findViewById(R.id.type_of_identity_card);
+
     }
 
     final DatePickerDialog.OnDateSetListener mdate = new DatePickerDialog.OnDateSetListener(){

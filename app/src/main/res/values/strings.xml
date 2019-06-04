@@ -4,4 +4,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="GET_SELECTED_ITEM">selected_item</string>
+    <string name="GET_USER_ROLE">userRole</string>
+    <string name="GET_CREDENTIAL">credential</string>
+    <string name="GET_USER_TOKEN">token</string>
 </resources>
