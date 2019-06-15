@@ -20,6 +20,9 @@ public interface DataApi {
     Call<ResponseBody> getUserDetail(@Query("token") String token,
                                      @Query("userId") String userId);
 
+    @GET("/data/poliklinik")
+    Call<ResponseBody> getPoliklinik();
+
     @GET("/data/education")
     Call<ResponseBody> getEducation();
 

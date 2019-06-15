@@ -4,15 +4,14 @@ import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.GridView;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -35,19 +34,22 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements HomeAdapter.Listener{
     private static final String TAG = HomeFragment.class.getName();
 
     private SharedPreferences preferences;
     private String userRole;
     private String token;
 
-    private GridView homeMenu;
+    private RecyclerView homeMenu;
     private ArrayList<MenuItemModel> menuitem;
     private HomeAdapter adapter;
     private MenuItemModel item;
 
     private ProgressDialog progressDialog;
+
+    private String[] userTitle = {"Pendaftaran Poliklinik", "Lihat Poliklinik"};
+    private int[] userIcon = {R.drawable.ic_poliklinik_regis, R.drawable.ic_poliklinik_list};
 
     public HomeFragment() {
 
@@ -56,7 +58,6 @@ public class HomeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
 
         preferences = getActivity().getSharedPreferences(getString(R.string.GET_CREDENTIAL), getContext().MODE_PRIVATE);
         userRole = preferences.getString(getString(R.string.GET_USER_ROLE),"default");
@@ -68,9 +69,11 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-        bindView(view);
+        ((HomeActivity)getActivity()).getSupportActionBar().setTitle("Beranda");
+        ((HomeActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        setHasOptionsMenu(true);
 
-        ((HomeActivity)getActivity()).getSupportActionBar().setTitle("Home");
+        bindView(view);
 
         if (userRole.equals("default")){
             Toast.makeText(getActivity(), "Silahkan Login terlebih dahulu", Toast.LENGTH_SHORT).show();
@@ -78,96 +81,38 @@ public class HomeFragment extends Fragment {
         }
 
         if (userRole.equals("USER")){
-            adapter.clear();
             menuitem = new ArrayList<>();
-            adapter = new HomeAdapter(getContext(),menuItem());
+            adapter = new HomeAdapter(getActivity(),this);
+            adapter.setData(menuItem(userTitle,userIcon));
             homeMenu.setAdapter(adapter);
 
-            homeMenu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    switch (position){
-                        case 0:
-                            Log.i(TAG, "userRole: " + userRole);
-                            break;
-                        case 1:
-                            Log.i(TAG, "userRole: " + userRole);
 
-                            break;
-                        case 2:
-                            Log.i(TAG, "userRole: " + userRole);
-
-                            break;
-                        case 3:
-                            Log.i(TAG, "userRole: " + userRole);
-
-                            break;
-                    }
-                }
-            });
         }
         if (userRole.equals("ADMIN")){
-            adapter.clear();
             menuitem = new ArrayList<>();
-            adapter = new HomeAdapter(getContext(),menuItem());
+            adapter = new HomeAdapter(getActivity(),this);
+            adapter.setData(menuItem(userTitle,userIcon));
             homeMenu.setAdapter(adapter);
 
-            homeMenu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    switch (position){
-                        case 0:
-                            Log.i(TAG, "userRole: " + userRole);
-
-                            break;
-                        case 1:
-                            Log.i(TAG, "userRole: " + userRole);
-
-                            break;
-                        case 2:
-                            Log.i(TAG, "userRole: " + userRole);
-
-                            break;
-                        case 3:
-                            Log.i(TAG, "userRole: " + userRole);
-
-                            break;
-                    }
-                }
-            });
         }
         if (userRole.equals("DOKTER")){
-//            adapter.clear();
             menuitem = new ArrayList<>();
-            adapter = new HomeAdapter(getContext(),menuItem());
+            adapter = new HomeAdapter(getActivity(),this);
+            adapter.setData(menuItem(userTitle,userIcon));
             homeMenu.setAdapter(adapter);
-
-            homeMenu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    switch (position){
-                        case 0:
-                            Log.i(TAG, "userRole: " + userRole);
-
-                            break;
-                        case 1:
-                            Log.i(TAG, "userRole: " + userRole);
-
-                            break;
-                        case 2:
-                            Log.i(TAG, "userRole: " + userRole);
-
-                            break;
-                        case 3:
-                            Log.i(TAG, "userRole: " + userRole);
-
-                            break;
-                    }
-                }
-            });
 
         }
         return view;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        if (menu != null){
+            menu.clear();
+        }
+
+        inflater.inflate(R.menu.home_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
@@ -225,24 +170,39 @@ public class HomeFragment extends Fragment {
     }
 
     private void bindView(View view){
-        homeMenu = (GridView)view.findViewById(R.id.home_menu);
-
+        homeMenu = (RecyclerView) view.findViewById(R.id.home_menu);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(),2);
+        homeMenu.setLayoutManager(gridLayoutManager);
     }
 
-    private ArrayList<MenuItemModel> menuItem(){
-        item = new MenuItemModel("Menu 1", R.drawable.ic_launcher_background);
-        menuitem.add(item);
+    private ArrayList<MenuItemModel> menuItem(String[] title, int[] image){
 
-        item = new MenuItemModel("Menu 2", R.drawable.ic_launcher_background);
-        menuitem.add(item);
-
-        item = new MenuItemModel("Menu 3", R.drawable.ic_launcher_background);
-        menuitem.add(item);
-
-        item = new MenuItemModel("Menu 4", R.drawable.ic_launcher_background);
-        menuitem.add(item);
+        for (int i = 0; i < image.length; i++){
+           item = new MenuItemModel(i,title[i], image[i]);
+           menuitem.add(item);
+        }
 
         return menuitem;
     }
+
+    @Override
+    public void onClick(MenuItemModel dataPosition) {
+        switch (dataPosition.getId()){
+            case 0:
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_layout_home, new PoliklinikRegisterFragment(), "poliklinik_register_fragment")
+                        .addToBackStack(null)
+                        .commit();
+                break;
+            case 1:
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_layout_home, new PoliklinikListFragment(), "poliklinik_list_fragment")
+                        .addToBackStack(null)
+                        .commit();
+                break;
+        }
+
+    }
+
 
 }

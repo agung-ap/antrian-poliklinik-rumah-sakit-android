@@ -51,16 +51,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
         ((MainActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         bindView(view);
 
-//        register.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                final FragmentTransaction ft = getFragmentManager().beginTransaction();
-//                ft.replace(R.id.fragment_layout, new RegisterFragment(), "NewFragmentTag");
-//                ft.addToBackStack(null);
-//                ft.commit();
-//            }
-//        });
-
         return view;
     }
 
@@ -145,6 +135,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
             }
         });
     }
+
+
 
     @Override
     public void onClick(View v) {

@@ -6,67 +6,67 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
-
 
 import java.util.ArrayList;
 import java.util.List;
 
 import id.developer.rs_thamrin.R;
 import id.developer.rs_thamrin.model.MenuItemModel;
+import id.developer.rs_thamrin.model.Poliklinik;
 
-public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
+public class PoliklinikListAdapter extends RecyclerView.Adapter<PoliklinikListAdapter.ViewHolder> {
     private Context context;
-    private List<MenuItemModel> menuItemModelList;
+    private List<Poliklinik> poliklinikList;
     private Listener listener;
 
-    public HomeAdapter(Context context, Listener listener) {
+    public PoliklinikListAdapter(Context context, Listener listener) {
         this.context = context;
         this.listener = listener;
-        menuItemModelList = new ArrayList<>();
+        poliklinikList = new ArrayList<>();
     }
 
-    public void setData(ArrayList<MenuItemModel> menuItemModelList) {
-        this.menuItemModelList = menuItemModelList;
+    public void setData(List<Poliklinik> poliklinikList) {
+        this.poliklinikList = poliklinikList;
         notifyDataSetChanged();
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(context).inflate(R.layout.menu_item, viewGroup, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.poliklinik_list, viewGroup, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        viewHolder.title.setText(menuItemModelList.get(i).getTitle());
-        viewHolder.icon.setImageResource(menuItemModelList.get(i).getImageSource());
+        viewHolder.title.setText(poliklinikList.get(i).getPoliklinikName());
+        viewHolder.kuota.setText("Kuota : " + poliklinikList.get(i).getKuota());
     }
 
     @Override
     public int getItemCount() {
-        return menuItemModelList == null ? 0 : menuItemModelList.size();
+        return poliklinikList == null ? 0 : poliklinikList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        ImageView icon;
-        TextView title;
+        TextView title, kuota;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            icon = (ImageView)itemView.findViewById(R.id.card_image);
-            title = (TextView)itemView.findViewById(R.id.card_title);
+
+            title = (TextView)itemView.findViewById(R.id.title);
+            kuota = (TextView)itemView.findViewById(R.id.kuota);
+
             itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
-            listener.onClick(menuItemModelList.get(getAdapterPosition()));
+            listener.onClick(poliklinikList.get(getAdapterPosition()));
         }
     }
 
     public interface Listener{
-        void onClick(MenuItemModel dataPosition);
+        void onClick(Poliklinik dataPosition);
     }
 }

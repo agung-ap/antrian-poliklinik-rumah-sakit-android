@@ -20,7 +20,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.HomeActivity" />
-        <activity android:name=".activity.IdentityCardResult" />
+        <activity android:name=".activity.result.IdentityCardResult" />
         <activity android:name=".activity.MainActivity"/>
     </application>
 

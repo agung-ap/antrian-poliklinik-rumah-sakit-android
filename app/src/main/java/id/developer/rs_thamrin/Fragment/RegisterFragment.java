@@ -4,32 +4,34 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
 import id.developer.rs_thamrin.R;
-import id.developer.rs_thamrin.activity.IdentityCardResult;
+import id.developer.rs_thamrin.activity.result.FamilyResult;
+import id.developer.rs_thamrin.activity.result.IdentityCardResult;
 import id.developer.rs_thamrin.activity.MainActivity;
+import id.developer.rs_thamrin.model.master.Family;
 import id.developer.rs_thamrin.model.master.TypeOfIdentityCard;
 
-import static android.support.constraint.Constraints.TAG;
-
-public class RegisterFragment extends Fragment{
+public class RegisterFragment extends Fragment implements View.OnClickListener{
     private EditText firstName;
     private EditText lastName;
     private EditText birthPlace;
     private EditText birthDate;
+    private EditText family;
+    private EditText typeOfFamily;
     private EditText identityCard;
     private EditText typeOfIdentityCard;
-    private EditText gender;
+    private Spinner gender;
     private EditText mariedStatus;
     private EditText education;
     private EditText phoneNumber;
@@ -43,6 +45,7 @@ public class RegisterFragment extends Fragment{
     private EditText address;
     private EditText typeOfAddress;
 
+    private String familyCode;
     private String identitycardCode;
     private String mariedStatusCode;
     private String educationCode;
@@ -92,9 +95,23 @@ public class RegisterFragment extends Fragment{
         lastName = (EditText)view.findViewById(R.id.last_name);
         birthPlace = (EditText)view.findViewById(R.id.birth_place);
         birthDate = (EditText)view.findViewById(R.id.birth_date);
+        family = (EditText)view.findViewById(R.id.family_name);
+        typeOfFamily = (EditText)view.findViewById(R.id.type_of_family_name);
         identityCard = (EditText)view.findViewById(R.id.identity_card);
         typeOfIdentityCard = (EditText)view.findViewById(R.id.type_of_identity_card);
-
+        gender = (Spinner) view.findViewById(R.id.gender);
+        mariedStatus = (EditText)view.findViewById(R.id.maried_status);
+        education = (EditText)view.findViewById(R.id.education);
+        phoneNumber = (EditText)view.findViewById(R.id.phone_number);
+        job = (EditText)view.findViewById(R.id.job);
+        typeOfPayment = (EditText)view.findViewById(R.id.type_of_payment);
+        country = (EditText)view.findViewById(R.id.country);
+        province = (EditText)view.findViewById(R.id.province);
+        regency = (EditText)view.findViewById(R.id.regency);
+        district = (EditText)view.findViewById(R.id.district);
+        village = (EditText)view.findViewById(R.id.village);
+        address = (EditText)view.findViewById(R.id.address);
+        typeOfAddress = (EditText)view.findViewById(R.id.type_of_address);
     }
 
     final DatePickerDialog.OnDateSetListener mdate = new DatePickerDialog.OnDateSetListener(){
@@ -118,7 +135,7 @@ public class RegisterFragment extends Fragment{
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (resultCode == 1){
+        if (resultCode == IdentityCardResult.REQUEST_BACK){
 
             Bundle bundle = data.getExtras();
             ArrayList<TypeOfIdentityCard> list = new ArrayList<>();
@@ -127,5 +144,31 @@ public class RegisterFragment extends Fragment{
             identitycardCode = list.get(0).getCode();
             typeOfIdentityCard.setText(list.get(0).getName());
         }
+        if (resultCode == FamilyResult.REQUEST_BACK){
+            Bundle bundle = data.getExtras();
+            ArrayList<Family> list = new ArrayList<>();
+            list = bundle.getParcelableArrayList(getString(R.string.GET_SELECTED_ITEM));
+
+            familyCode = list.get(0).getCode();
+            typeOfFamily.setText(list.get(0).getName());
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.birth_date:
+                showDatePickerDialog();
+                break;
+            case R.id.type_of_identity_card:
+                startActivityForResult(new Intent(getActivity(), IdentityCardResult.class),
+                        IdentityCardResult.REQUEST_ADD);
+                break;
+            case R.id.type_of_family_name:
+                startActivityForResult(new Intent(getActivity(), FamilyResult.class),
+                        FamilyResult.REQUEST_ADD);
+                break;
+        }
+
     }
 }

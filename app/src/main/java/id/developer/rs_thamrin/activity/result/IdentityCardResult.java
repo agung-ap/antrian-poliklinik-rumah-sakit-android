@@ -1,4 +1,4 @@
-package id.developer.rs_thamrin.activity;
+package id.developer.rs_thamrin.activity.result;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;

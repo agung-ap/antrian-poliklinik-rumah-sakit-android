@@ -6,17 +6,9 @@
     android:orientation="vertical"
     tools:context=".Fragment.HomeFragment">
 
-    <GridView
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/home_menu"
-        android:layout_marginTop="0dp"
-        android:layout_marginBottom="8dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:columnWidth="90dp"
-        android:numColumns="2"
-        android:verticalSpacing="8dp"
-        android:horizontalSpacing="0dp"
-        android:gravity="center"
-        tools:listitem="@layout/menu_item"/>
+        android:layout_height="match_parent"/>
 
 </LinearLayout>
