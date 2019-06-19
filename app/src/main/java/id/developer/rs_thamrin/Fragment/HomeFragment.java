@@ -20,8 +20,8 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import id.developer.rs_thamrin.Fragment.admin.MasterDataFragment;
-import id.developer.rs_thamrin.Fragment.admin.PoliklinikInputFragment;
+import id.developer.rs_thamrin.Fragment.admin.MasterDataAdminFragment;
+import id.developer.rs_thamrin.Fragment.admin.MasterDataListDoctorFragment;
 import id.developer.rs_thamrin.Fragment.admin.PoliklinikListAdminFragment;
 import id.developer.rs_thamrin.Fragment.admin.UserApproveFragment;
 import id.developer.rs_thamrin.Fragment.user.PoliklinikListFragment;
@@ -57,8 +57,8 @@ public class HomeFragment extends Fragment implements HomeAdapter.Listener{
     private String[] userTitle = {"Pendaftaran Poliklinik", "Lihat Poliklinik"};
     private int[] userIcon = {R.drawable.ic_poliklinik_regis, R.drawable.ic_poliklinik_list};
 
-    private String[] adminTitle = {"Poliklinik list", "Master Data", "User Approve"};
-    private int[] adminIcon = {R.drawable.ic_poliklinik_list, R.drawable.ic_master_data, R.drawable.ic_user_approve};
+    private String[] adminTitle = {"Poliklinik list", "Master Data Admin", "User Approve", "Master Data Dokter"};
+    private int[] adminIcon = {R.drawable.ic_poliklinik_list, R.drawable.ic_master_data, R.drawable.ic_user_approve, R.drawable.ic_master_data_doctor};
 
     public HomeFragment() {
 
@@ -225,13 +225,19 @@ public class HomeFragment extends Fragment implements HomeAdapter.Listener{
                     break;
                 case 1:
                     getFragmentManager().beginTransaction()
-                            .replace(R.id.fragment_layout_home, new MasterDataFragment(), "master_data_fragment")
+                            .replace(R.id.fragment_layout_home, new MasterDataAdminFragment(), "master_data_fragment")
                             .addToBackStack(null)
                             .commit();
                     break;
                 case 2:
                     getFragmentManager().beginTransaction()
                             .replace(R.id.fragment_layout_home, new UserApproveFragment(), "user_approve_fragment")
+                            .addToBackStack(null)
+                            .commit();
+                    break;
+                case 3:
+                    getFragmentManager().beginTransaction()
+                            .replace(R.id.fragment_layout_home, new MasterDataListDoctorFragment(), "user_approve_fragment")
                             .addToBackStack(null)
                             .commit();
                     break;

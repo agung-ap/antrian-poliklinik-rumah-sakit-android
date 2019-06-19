@@ -80,7 +80,7 @@ public class PoliklinikInputFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_poliklinik_input, container, false);
-        ((HomeActivity)getActivity()).getSupportActionBar().setTitle("Approval");
+        ((HomeActivity)getActivity()).getSupportActionBar().setTitle("Input Poliklinik");
         ((HomeActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         bindView(view);

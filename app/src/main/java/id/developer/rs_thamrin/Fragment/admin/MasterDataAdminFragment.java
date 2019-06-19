@@ -7,10 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import id.developer.rs_thamrin.R;
+import id.developer.rs_thamrin.activity.HomeActivity;
 
-public class MasterDataFragment extends Fragment {
+public class MasterDataAdminFragment extends Fragment {
 
-    public MasterDataFragment() {
+    public MasterDataAdminFragment() {
         // Required empty public constructor
     }
 
@@ -24,7 +25,11 @@ public class MasterDataFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_master_data, container, false);
+        View view = inflater.inflate(R.layout.fragment_master_data_admin, container, false);
+        setHasOptionsMenu(false);
+        ((HomeActivity)getActivity()).getSupportActionBar().setTitle("List Admin");
+        ((HomeActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         return view;
     }
 
