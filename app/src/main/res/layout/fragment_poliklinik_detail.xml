@@ -1,54 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Fragment.PoliklinikDetailFragment">
+    android:padding="8dp"
+    tools:context=".Fragment.user.PoliklinikDetailFragment">
 
     <!-- TODO: Update blank fragment layout -->
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginLeft="8dp"
+        android:textSize="18sp"
+        android:text="Title : "
+        android:layout_alignParentLeft="true"/>
+
     <TextView
         android:id="@+id/title_detail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_toEndOf="@+id/title"
+        android:text="Title"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginLeft="8dp"
-        android:textSize="21sp"
-        android:textStyle="bold"
-        android:text="Tittle"/>
+        android:textSize="18sp"
+        android:text="Time : "
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/title_detail"/>
 
     <TextView
         android:id="@+id/time_detail"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title_detail"
+        android:layout_alignParentRight="true"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_toEndOf="@+id/time"
+        android:text="Waktu"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/doctor_name"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginLeft="8dp"
-        android:textSize="21sp"
-        android:textStyle="bold"
-        android:text="Waktu"/>
+        android:textSize="18sp"
+        android:text="Doctor Name : "
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/time_detail"/>
 
     <TextView
         android:id="@+id/doctor_name_detail"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/time_detail"
+        android:layout_alignParentRight="true"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_toEndOf="@+id/doctor_name"
+        android:text="Doctor name"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/kuota"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginLeft="8dp"
-        android:textSize="21sp"
-        android:textStyle="bold"
-        android:text="Doctor name"/>
+        android:textSize="18sp"
+        android:text="Kuota : "
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/doctor_name_detail"/>
 
     <TextView
         android:id="@+id/kuota_detail"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/doctor_name_detail"
+        android:layout_alignParentRight="true"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginLeft="8dp"
-        android:textSize="21sp"
-        android:textStyle="bold"
-        android:text="Kuota"/>
+        android:layout_toEndOf="@+id/kuota"
+        android:text="Kuota"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
-</LinearLayout>
+</RelativeLayout>

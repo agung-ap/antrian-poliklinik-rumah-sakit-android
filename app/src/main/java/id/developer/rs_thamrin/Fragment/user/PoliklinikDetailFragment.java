@@ -1,4 +1,4 @@
-package id.developer.rs_thamrin.Fragment;
+package id.developer.rs_thamrin.Fragment.user;
 
 import android.content.Context;
 import android.net.Uri;
@@ -61,10 +61,10 @@ public class PoliklinikDetailFragment extends Fragment {
     }
 
     private void setData(){
-        title.setText("Nama Poliklinik : " + poliklinikList.get(0).getPoliklinikName());
-        time.setText("Waktu : " + poliklinikList.get(0).getTime());
-        doctorName.setText("Nama Dokter : " + poliklinikList.get(0).getDoctorName());
-        kuota.setText("Kuota : " + poliklinikList.get(0).getKuota());
+        title.setText(poliklinikList.get(0).getPoliklinikName());
+        time.setText(poliklinikList.get(0).getTime());
+        doctorName.setText(poliklinikList.get(0).getDoctorName());
+        kuota.setText(String.valueOf(poliklinikList.get(0).getKuota()));
     }
 
 }

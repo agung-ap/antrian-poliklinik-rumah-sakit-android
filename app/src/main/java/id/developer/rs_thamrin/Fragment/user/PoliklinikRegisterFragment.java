@@ -1,4 +1,4 @@
-package id.developer.rs_thamrin.Fragment;
+package id.developer.rs_thamrin.Fragment.user;
 
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
@@ -15,20 +15,16 @@ import android.widget.EditText;
 import android.support.v7.widget.AppCompatSpinner;
 
 
-import com.google.gson.JsonObject;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import id.developer.rs_thamrin.R;
 import id.developer.rs_thamrin.activity.HomeActivity;
-import id.developer.rs_thamrin.activity.MainActivity;
 import id.developer.rs_thamrin.api.DataApi;
 import id.developer.rs_thamrin.api.QueueApi;
 import id.developer.rs_thamrin.api.RetrofitBuilder;
@@ -36,6 +32,7 @@ import id.developer.rs_thamrin.model.Poliklinik;
 import id.developer.rs_thamrin.model.master.TypeOfPayment;
 import id.developer.rs_thamrin.model.request.QueueRequest;
 import id.developer.rs_thamrin.model.response.QueueResponse;
+import id.developer.rs_thamrin.util.GlobalFunction;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -188,7 +185,7 @@ public class PoliklinikRegisterFragment extends Fragment implements View.OnClick
                             poliklinik.setCode(jsonObject.getString("code"));
                             poliklinik.setPoliklinikName(jsonObject.getString("poliklinikName"));
 
-                            poliklinikName.add(jsonObject.getString("poliklinikName"));
+                            poliklinikName.add(jsonObject.getString("poliklinikName") + " "+ jsonObject.getString("time"));
                             poliklinikList.add(poliklinik);
                         }
 
@@ -259,7 +256,11 @@ public class PoliklinikRegisterFragment extends Fragment implements View.OnClick
                         queueResponse.setQueueCode(jsonObject.getString("queueCode"));
 
                         sendResponseToAnotherFragment(queueResponse);
-                    }else {
+                    }else if (object.getInt("code") == 2){
+                        progressDialog.dismiss();
+                        GlobalFunction.toast(getActivity(), object.getString("info"));
+                    }
+                    else {
                         progressDialog.dismiss();
                     }
 

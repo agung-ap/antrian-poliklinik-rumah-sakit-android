@@ -1,9 +1,6 @@
-package id.developer.rs_thamrin.Fragment;
+package id.developer.rs_thamrin.Fragment.user;
 
-import android.content.Context;
 import android.graphics.Color;
-import android.media.tv.TvContract;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -27,7 +24,6 @@ import id.developer.rs_thamrin.adapter.PoliklinikListAdapter;
 import id.developer.rs_thamrin.api.DataApi;
 import id.developer.rs_thamrin.api.RetrofitBuilder;
 import id.developer.rs_thamrin.model.Poliklinik;
-import id.developer.rs_thamrin.util.GlobalFunction;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;

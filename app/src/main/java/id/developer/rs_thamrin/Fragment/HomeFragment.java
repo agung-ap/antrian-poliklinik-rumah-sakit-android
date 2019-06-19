@@ -20,6 +20,12 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import id.developer.rs_thamrin.Fragment.admin.MasterDataFragment;
+import id.developer.rs_thamrin.Fragment.admin.PoliklinikInputFragment;
+import id.developer.rs_thamrin.Fragment.admin.PoliklinikListAdminFragment;
+import id.developer.rs_thamrin.Fragment.admin.UserApproveFragment;
+import id.developer.rs_thamrin.Fragment.user.PoliklinikListFragment;
+import id.developer.rs_thamrin.Fragment.user.PoliklinikRegisterFragment;
 import id.developer.rs_thamrin.R;
 import id.developer.rs_thamrin.activity.HomeActivity;
 import id.developer.rs_thamrin.activity.MainActivity;
@@ -50,6 +56,9 @@ public class HomeFragment extends Fragment implements HomeAdapter.Listener{
 
     private String[] userTitle = {"Pendaftaran Poliklinik", "Lihat Poliklinik"};
     private int[] userIcon = {R.drawable.ic_poliklinik_regis, R.drawable.ic_poliklinik_list};
+
+    private String[] adminTitle = {"Poliklinik list", "Master Data", "User Approve"};
+    private int[] adminIcon = {R.drawable.ic_poliklinik_list, R.drawable.ic_master_data, R.drawable.ic_user_approve};
 
     public HomeFragment() {
 
@@ -91,7 +100,7 @@ public class HomeFragment extends Fragment implements HomeAdapter.Listener{
         if (userRole.equals("ADMIN")){
             menuitem = new ArrayList<>();
             adapter = new HomeAdapter(getActivity(),this);
-            adapter.setData(menuItem(userTitle,userIcon));
+            adapter.setData(menuItem(adminTitle,adminIcon));
             homeMenu.setAdapter(adapter);
 
         }
@@ -170,7 +179,7 @@ public class HomeFragment extends Fragment implements HomeAdapter.Listener{
     }
 
     private void bindView(View view){
-        homeMenu = (RecyclerView) view.findViewById(R.id.home_menu);
+        homeMenu = view.findViewById(R.id.home_menu);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(),2);
         homeMenu.setLayoutManager(gridLayoutManager);
     }
@@ -187,20 +196,66 @@ public class HomeFragment extends Fragment implements HomeAdapter.Listener{
 
     @Override
     public void onClick(MenuItemModel dataPosition) {
-        switch (dataPosition.getId()){
-            case 0:
-                getFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_layout_home, new PoliklinikRegisterFragment(), "poliklinik_register_fragment")
-                        .addToBackStack(null)
-                        .commit();
-                break;
-            case 1:
-                getFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_layout_home, new PoliklinikListFragment(), "poliklinik_list_fragment")
-                        .addToBackStack(null)
-                        .commit();
-                break;
+        if (userRole.equals("USER")){
+            switch (dataPosition.getId()){
+
+                case 0:
+                    getFragmentManager().beginTransaction()
+                            .replace(R.id.fragment_layout_home, new PoliklinikRegisterFragment(), "poliklinik_register_fragment")
+                            .addToBackStack(null)
+                            .commit();
+                    break;
+                case 1:
+                    getFragmentManager().beginTransaction()
+                            .replace(R.id.fragment_layout_home, new PoliklinikListFragment(), "poliklinik_list_fragment")
+                            .addToBackStack(null)
+                            .commit();
+                    break;
+            }
         }
+
+        if (userRole.equals("ADMIN")){
+            switch (dataPosition.getId()){
+
+                case 0:
+                    getFragmentManager().beginTransaction()
+                            .replace(R.id.fragment_layout_home, new PoliklinikListAdminFragment(), "poliklinik_list_admin_fragment")
+                            .addToBackStack(null)
+                            .commit();
+                    break;
+                case 1:
+                    getFragmentManager().beginTransaction()
+                            .replace(R.id.fragment_layout_home, new MasterDataFragment(), "master_data_fragment")
+                            .addToBackStack(null)
+                            .commit();
+                    break;
+                case 2:
+                    getFragmentManager().beginTransaction()
+                            .replace(R.id.fragment_layout_home, new UserApproveFragment(), "user_approve_fragment")
+                            .addToBackStack(null)
+                            .commit();
+                    break;
+            }
+        }
+
+        if (userRole.equals("USER")){
+            switch (dataPosition.getId()){
+
+                case 0:
+                    getFragmentManager().beginTransaction()
+                            .replace(R.id.fragment_layout_home, new PoliklinikRegisterFragment(), "poliklinik_register_fragment")
+                            .addToBackStack(null)
+                            .commit();
+                    break;
+                case 1:
+                    getFragmentManager().beginTransaction()
+                            .replace(R.id.fragment_layout_home, new PoliklinikListFragment(), "poliklinik_list_fragment")
+                            .addToBackStack(null)
+                            .commit();
+                    break;
+            }
+        }
+
 
     }
 

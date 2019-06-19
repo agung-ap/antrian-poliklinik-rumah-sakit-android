@@ -1,7 +1,5 @@
-package id.developer.rs_thamrin.Fragment;
+package id.developer.rs_thamrin.Fragment.user;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -15,9 +13,9 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import id.developer.rs_thamrin.Fragment.HomeFragment;
 import id.developer.rs_thamrin.R;
 import id.developer.rs_thamrin.activity.HomeActivity;
-import id.developer.rs_thamrin.model.Poliklinik;
 import id.developer.rs_thamrin.model.response.QueueResponse;
 
 public class PoliklinikRegisterResultFragment extends Fragment {

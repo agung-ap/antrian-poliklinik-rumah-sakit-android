@@ -1,20 +1,22 @@
 package id.developer.rs_thamrin.api;
 
+import id.developer.rs_thamrin.model.request.PoliklinikRequest;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.GET;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 public interface DataApi {
-    @POST("/data/inputPoliklinik")
+    @Headers({
+            "Content-Type:application/json"
+    })
+    @POST("/data/input/poliklinik")
     Call<ResponseBody> setPoliklinik(@Query("token") String token,
-                                     @Field("code") String email,
-                                     @Field("schedule") String schedule,
-                                     @Field("doctor") String doctorId,
-                                     @Field("specialization") String specialization,
-                                     @Field("kuota") int kuota);
+                                     @Body PoliklinikRequest request);
 
     @GET("/data/userDetail")
     Call<ResponseBody> getUserDetail(@Query("token") String token,
@@ -22,6 +24,15 @@ public interface DataApi {
 
     @GET("/data/poliklinik")
     Call<ResponseBody> getPoliklinik();
+
+    @GET("/data/dokter")
+    Call<ResponseBody> getDokter();
+
+    @GET("/data/schedule")
+    Call<ResponseBody> getSchedule();
+
+    @GET("/data/specialization")
+    Call<ResponseBody> getSpecialization();
 
     @GET("/data/education")
     Call<ResponseBody> getEducation();
