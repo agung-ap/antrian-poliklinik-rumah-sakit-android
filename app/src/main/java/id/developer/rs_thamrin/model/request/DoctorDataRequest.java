@@ -4,8 +4,6 @@ public class DoctorDataRequest {
     private String dokterId;
     private String firstName;
     private String lastName;
-    private String birthPlace;
-    private String birthDate;
     private String specialization;
     private String address;
 
@@ -52,19 +50,4 @@ public class DoctorDataRequest {
         this.address = address;
     }
 
-    public String getBirthPlace() {
-        return birthPlace;
-    }
-
-    public void setBirthPlace(String birthPlace) {
-        this.birthPlace = birthPlace;
-    }
-
-    public String getBirthDate() {
-        return birthDate;
-    }
-
-    public void setBirthDate(String birthDate) {
-        this.birthDate = birthDate;
-    }
 }

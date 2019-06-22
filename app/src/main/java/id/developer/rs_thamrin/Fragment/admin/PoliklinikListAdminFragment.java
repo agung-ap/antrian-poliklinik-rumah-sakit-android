@@ -162,16 +162,16 @@ public class PoliklinikListAdminFragment extends Fragment implements PoliklinikL
                 .commit();
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case android.R.id.home:
-                getFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_layout_home, new HomeFragment(), "fragment_home")
-                        .commit();
-                break;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        switch (item.getItemId()){
+//            case android.R.id.home:
+//                getFragmentManager().beginTransaction()
+//                        .replace(R.id.fragment_layout_home, new HomeFragment(), "fragment_home")
+//                        .commit();
+//                break;
+//        }
+//
+//        return super.onOptionsItemSelected(item);
+//    }
 }

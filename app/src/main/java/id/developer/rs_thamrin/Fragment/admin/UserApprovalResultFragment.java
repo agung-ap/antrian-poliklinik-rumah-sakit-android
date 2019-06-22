@@ -18,6 +18,7 @@ import java.util.List;
 import id.developer.rs_thamrin.Fragment.HomeFragment;
 import id.developer.rs_thamrin.Fragment.user.PoliklinikRegisterFragment;
 import id.developer.rs_thamrin.R;
+import id.developer.rs_thamrin.activity.HomeActivity;
 import id.developer.rs_thamrin.model.response.QueueResponse;
 import id.developer.rs_thamrin.model.response.UserApprovalResponse;
 
@@ -43,6 +44,9 @@ public class UserApprovalResultFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_user_approval_result, container, false);
+        ((HomeActivity)getActivity()).getSupportActionBar().setTitle("Success");
+        ((HomeActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+
         bindView(view);
 
 
@@ -51,10 +55,14 @@ public class UserApprovalResultFragment extends Fragment {
             public void onClick(View v) {
                 FragmentManager manager = getActivity().getSupportFragmentManager();
                 FragmentTransaction trans = manager.beginTransaction();
-                trans.replace(R.id.fragment_layout_home, new HomeFragment(), "home_fragment");
-                trans.remove(new UserApproveFragment());
+
+                if (manager.getBackStackEntryCount() > 0) {
+                    FragmentManager.BackStackEntry first = manager.getBackStackEntryAt(1);
+                    manager.popBackStack(first.getId(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                }
+
+                trans.remove(new UserApprovalResultFragment());
                 trans.commit();
-                manager.popBackStack();
 
             }
         });

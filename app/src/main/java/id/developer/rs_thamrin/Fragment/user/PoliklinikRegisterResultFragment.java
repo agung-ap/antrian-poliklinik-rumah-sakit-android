@@ -81,8 +81,8 @@ public class PoliklinikRegisterResultFragment extends Fragment {
         message.setText(responses.get(0).getMessage());
         queueCode.setText(responses.get(0).getQueueCode());
         customerName.setText(responses.get(0).getCustomerName());
-        poliklinikName.setText(responses.get(0).getPoliklinikName());
-        doctorName.setText(responses.get(0).getDoctorName());
+        poliklinikName.setText("Poliklinik " + responses.get(0).getPoliklinikName());
+        doctorName.setText("Dokter " + responses.get(0).getDoctorName());
     }
 
     public void clearStack() {

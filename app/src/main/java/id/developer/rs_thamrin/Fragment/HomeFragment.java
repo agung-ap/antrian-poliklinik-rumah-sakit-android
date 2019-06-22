@@ -244,7 +244,7 @@ public class HomeFragment extends Fragment implements HomeAdapter.Listener{
             }
         }
 
-        if (userRole.equals("USER")){
+        if (userRole.equals("DOKTER")){
             switch (dataPosition.getId()){
 
                 case 0:

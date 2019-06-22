@@ -47,8 +47,6 @@ public class MasterDataDoctorInputFragment extends Fragment {
     private EditText userId;
     private EditText firstName;
     private EditText lastName;
-    private EditText birthPlace;
-    private EditText birthDate;
     private EditText address;
 
     private AppCompatSpinner specialization;
@@ -83,13 +81,6 @@ public class MasterDataDoctorInputFragment extends Fragment {
         bindView(view);
         getSpecialization();
 
-        birthDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showDatePickerDialog();
-            }
-        });
-
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -101,29 +92,10 @@ public class MasterDataDoctorInputFragment extends Fragment {
         return view;
     }
 
-    final DatePickerDialog.OnDateSetListener mdate = new DatePickerDialog.OnDateSetListener(){
-        @Override
-        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-            myCalendar.set(Calendar.YEAR, year);
-            myCalendar.set(Calendar.MONTH, month);
-            myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            birthDate.setText(sdf.format(myCalendar.getTime()));
-        }
-    };
-
-    private void showDatePickerDialog() {
-        DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), mdate, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH));
-        datePickerDialog.show();
-    }
-
     private void bindView(View view) {
         userId = view.findViewById(R.id.user_id_dokter);
         firstName = view.findViewById(R.id.first_name_dokter);
         lastName = view.findViewById(R.id.last_name_dokter);
-        birthPlace = view.findViewById(R.id.birth_place_dokter);
-        birthDate = view.findViewById(R.id.birth_date_dokter);
         address = view.findViewById(R.id.address_dokter);
 
         specialization = view.findViewById(R.id.specialization_dokter);
@@ -194,8 +166,6 @@ public class MasterDataDoctorInputFragment extends Fragment {
         request.setDokterId(userId.getText().toString().trim());
         request.setFirstName(firstName.getText().toString().trim());
         request.setLastName(lastName.getText().toString().trim());
-        request.setBirthPlace(birthPlace.getText().toString().trim());
-        request.setBirthDate(birthDate.getText().toString().trim());
         request.setAddress(address.getText().toString().trim());
         request.setSpecialization(specializationCode);
 
@@ -248,6 +218,7 @@ public class MasterDataDoctorInputFragment extends Fragment {
 
         getFragmentManager().beginTransaction()
                 .replace(R.id.fragment_layout_home, fragment, "doctor_register_result_fragment")
+                .addToBackStack(null)
                 .commit();
     }
 

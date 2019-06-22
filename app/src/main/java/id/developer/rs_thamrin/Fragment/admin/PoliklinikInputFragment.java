@@ -227,6 +227,8 @@ public class PoliklinikInputFragment extends Fragment {
                             doctorData.setId(jsonObject.getInt("id"));
                             doctorData.setName(jsonObject.getString("name"));
                             doctorData.setSpecialization(jsonObject.getString("specialization"));
+                            doctorData.setSpecializationCode(jsonObject.getString("specializationCode"));
+                            doctorData.setAddress(jsonObject.getString("address"));
 
                             doctorDataName.add(doctorData.getName() + " : "+ doctorData.getSpecialization());
                             doctorDataList.add(doctorData);

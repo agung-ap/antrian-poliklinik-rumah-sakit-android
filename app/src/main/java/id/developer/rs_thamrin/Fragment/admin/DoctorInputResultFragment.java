@@ -1,9 +1,9 @@
 package id.developer.rs_thamrin.Fragment.admin;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import id.developer.rs_thamrin.R;
+import id.developer.rs_thamrin.activity.HomeActivity;
 import id.developer.rs_thamrin.model.response.DoctorDataResponse;
 import id.developer.rs_thamrin.model.response.UserApprovalResponse;
 
@@ -37,7 +38,27 @@ public class DoctorInputResultFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_doctor_input_result, container, false);
+        ((HomeActivity)getActivity()).getSupportActionBar().setTitle("Success");
+        ((HomeActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+
         bindView(view);
+
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                FragmentManager manager = getActivity().getSupportFragmentManager();
+                FragmentTransaction trans = manager.beginTransaction();
+
+                if (manager.getBackStackEntryCount() > 0) {
+                    FragmentManager.BackStackEntry first = manager.getBackStackEntryAt(1);
+                    manager.popBackStack(first.getId(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                }
+
+                trans.remove(new MasterDataDoctorInputFragment());
+                trans.commit();
+            }
+        });
 
 
         return view;
@@ -59,5 +80,25 @@ public class DoctorInputResultFragment extends Fragment {
         password.setText(responses.get(0).getPassword());
         specialization.setText(responses.get(0).getSpecialization());
         createdDate.setText(responses.get(0).getCreatedDate());
+    }
+
+    public void clearStack() {
+        //Here we are clearing back stack fragment entries
+        int backStackEntry = getFragmentManager().getBackStackEntryCount();
+        if (backStackEntry > 0) {
+            for (int i = 0; i < backStackEntry; i++) {
+                getFragmentManager().popBackStackImmediate();
+            }
+        }
+
+        //Here we are removing all the fragment that are shown here
+        if (getFragmentManager().getFragments() != null && getFragmentManager().getFragments().size() > 0) {
+            for (int i = 0; i < getFragmentManager().getFragments().size(); i++) {
+                Fragment mFragment = getFragmentManager().getFragments().get(i);
+                if (mFragment != null) {
+                    getFragmentManager().beginTransaction().remove(mFragment).commit();
+                }
+            }
+        }
     }
 }
