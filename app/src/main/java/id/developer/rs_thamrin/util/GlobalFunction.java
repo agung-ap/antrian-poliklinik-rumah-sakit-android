@@ -35,4 +35,13 @@ public class GlobalFunction {
         intent.putExtra(activity.getString(R.string.GET_USER_ROLE), role);
         activity.startActivity(intent);
     }
+
+    public static void addInfoCodeAndTimeResponse(Context context, String info, String code, String date){
+        SharedPreferences sharedPreferences = context.getSharedPreferences(context.getString(R.string.RESPONSE),context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(context.getString(R.string.GET_INFO), info);
+        editor.putString(context.getString(R.string.GET_CODE), code);
+        editor.putString(context.getString(R.string.GET_DATE), date);
+        editor.apply();
+    }
 }

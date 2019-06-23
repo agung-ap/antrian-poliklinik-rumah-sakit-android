@@ -7,4 +7,8 @@
     <string name="GET_USER_ROLE">userRole</string>
     <string name="GET_CREDENTIAL">credential</string>
     <string name="GET_USER_TOKEN">token</string>
+    <string name="GET_INFO">info</string>
+    <string name="GET_CODE">code</string>
+    <string name="GET_DATE">date</string>
+    <string name="RESPONSE">response</string>
 </resources>

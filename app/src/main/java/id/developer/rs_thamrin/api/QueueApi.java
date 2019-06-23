@@ -5,6 +5,8 @@ import id.developer.rs_thamrin.model.request.QueueRequest;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
+import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
@@ -15,4 +17,10 @@ public interface QueueApi {
     })
     @POST("/queue/addQueue")
     Call<ResponseBody> setQueue(@Query("token") String token,@Body QueueRequest loginRequest);
+
+    @GET("/queue/checkQueue")
+    Call<ResponseBody> checkQueue(@Query("token") String token);
+
+    @DELETE("/queue/cancelQueue")
+    Call<ResponseBody> cancelQueue(@Query("token") String token);
 }

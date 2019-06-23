@@ -4,6 +4,7 @@ public class QueueRequest {
     private String poliklinik;
     private String paymentNumber;
     private String paymentType;
+    private String date;
 
     public String getPoliklinik() {
         return poliklinik;
@@ -27,5 +28,13 @@ public class QueueRequest {
 
     public void setPaymentType(String paymentType) {
         this.paymentType = paymentType;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 }

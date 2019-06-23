@@ -1,5 +1,6 @@
 package id.developer.rs_thamrin.api;
 
+import id.developer.rs_thamrin.model.request.CustomerDataRequest;
 import id.developer.rs_thamrin.model.request.DoctorDataRequest;
 import id.developer.rs_thamrin.model.request.LoginRequest;
 import id.developer.rs_thamrin.model.request.UserApproveRequest;
@@ -16,6 +17,12 @@ public interface RegisterApi {
     })
     @POST("/register/approve")
     Call<ResponseBody> setApprove(@Body UserApproveRequest approveRequest);
+
+    @Headers({
+            "Content-Type:application/json"
+    })
+    @POST("/register/customer")
+    Call<ResponseBody> setCustomer(@Body CustomerDataRequest request);
 
     @Headers({
             "Content-Type:application/json"

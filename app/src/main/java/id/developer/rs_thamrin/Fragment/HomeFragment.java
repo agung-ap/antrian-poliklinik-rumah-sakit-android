@@ -4,6 +4,8 @@ import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -26,13 +28,16 @@ import id.developer.rs_thamrin.Fragment.admin.PoliklinikListAdminFragment;
 import id.developer.rs_thamrin.Fragment.admin.UserApproveFragment;
 import id.developer.rs_thamrin.Fragment.user.PoliklinikListFragment;
 import id.developer.rs_thamrin.Fragment.user.PoliklinikRegisterFragment;
+import id.developer.rs_thamrin.Fragment.user.PoliklinikRegisterResultFragment;
 import id.developer.rs_thamrin.R;
 import id.developer.rs_thamrin.activity.HomeActivity;
 import id.developer.rs_thamrin.activity.MainActivity;
 import id.developer.rs_thamrin.adapter.HomeAdapter;
 import id.developer.rs_thamrin.api.LoginApi;
+import id.developer.rs_thamrin.api.QueueApi;
 import id.developer.rs_thamrin.api.RetrofitBuilder;
 import id.developer.rs_thamrin.model.MenuItemModel;
+import id.developer.rs_thamrin.model.response.QueueResponse;
 import id.developer.rs_thamrin.util.GlobalFunction;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -200,10 +205,7 @@ public class HomeFragment extends Fragment implements HomeAdapter.Listener{
             switch (dataPosition.getId()){
 
                 case 0:
-                    getFragmentManager().beginTransaction()
-                            .replace(R.id.fragment_layout_home, new PoliklinikRegisterFragment(), "poliklinik_register_fragment")
-                            .addToBackStack(null)
-                            .commit();
+                    checkPoliklinikQueue(token);
                     break;
                 case 1:
                     getFragmentManager().beginTransaction()
@@ -263,6 +265,69 @@ public class HomeFragment extends Fragment implements HomeAdapter.Listener{
         }
 
 
+    }
+
+
+    private void checkPoliklinikQueue(String token){
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setMessage("Please wait...");
+        progressDialog.show();
+        progressDialog.setCanceledOnTouchOutside(false);
+
+        QueueApi queueApi = RetrofitBuilder.getApiService().create(QueueApi.class);
+        Call<ResponseBody> callQueueApi = queueApi.checkQueue(token);
+        callQueueApi.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+
+                    JSONObject object = new JSONObject(response.body().string());
+
+                    if (object.getInt("code") == 0){
+
+                        Bundle bundle = new Bundle();
+                        bundle.putBoolean("status", false);
+                        PoliklinikRegisterFragment fragment = new PoliklinikRegisterFragment();
+                        fragment.setArguments(bundle);
+
+                        progressDialog.dismiss();
+                        getFragmentManager().beginTransaction()
+                                .replace(R.id.fragment_layout_home, fragment, "poliklinik_register_result_fragment")
+                                .addToBackStack(null)
+                                .commit();
+
+                    }else {
+                        JSONObject jsonObject = object.getJSONObject("data");
+
+                        Bundle bundle = new Bundle();
+                        bundle.putBoolean("status", true);
+                        bundle.putString(getString(R.string.GET_INFO), object.getString("info"));
+                        bundle.putString(getString(R.string.GET_CODE), jsonObject.getString("queueCode"));
+                        bundle.putString(getString(R.string.GET_DATE), jsonObject.getString("date"));
+
+                        PoliklinikRegisterFragment fragment = new PoliklinikRegisterFragment();
+                        fragment.setArguments(bundle);
+
+                        progressDialog.dismiss();
+
+                        getFragmentManager().beginTransaction()
+                                .replace(R.id.fragment_layout_home, fragment, "poliklinik_register_result_fragment")
+                                .addToBackStack(null)
+                                .commit();
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
     }
 
 
