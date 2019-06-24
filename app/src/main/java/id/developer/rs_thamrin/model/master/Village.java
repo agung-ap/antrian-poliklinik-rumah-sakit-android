@@ -3,18 +3,19 @@ package id.developer.rs_thamrin.model.master;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.math.BigDecimal;
+
 public class Village implements Parcelable {
-    private String id;
-    private String districtId;
+    private long id;
+    private long districtId;
     private String name;
 
     public Village() {
     }
 
-
     protected Village(Parcel in) {
-        id = in.readString();
-        districtId = in.readString();
+        id = in.readLong();
+        districtId = in.readLong();
         name = in.readString();
     }
 
@@ -30,31 +31,19 @@ public class Village implements Parcelable {
         }
     };
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(id);
-        dest.writeString(districtId);
-        dest.writeString(name);
-    }
-
-    public String getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public String getDistrictId() {
+    public long getDistrictId() {
         return districtId;
     }
 
-    public void setDistrictId(String districtId) {
+    public void setDistrictId(long districtId) {
         this.districtId = districtId;
     }
 
@@ -66,7 +55,15 @@ public class Village implements Parcelable {
         this.name = name;
     }
 
-    public static Creator<Village> getCREATOR() {
-        return CREATOR;
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(id);
+        dest.writeLong(districtId);
+        dest.writeString(name);
     }
 }

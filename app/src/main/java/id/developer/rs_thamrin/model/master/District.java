@@ -4,17 +4,16 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class District implements Parcelable {
-    private String id;
-    private String regencyId;
+    private long id;
+    private long regencyId;
     private String name;
 
     public District() {
     }
 
-
     protected District(Parcel in) {
-        id = in.readString();
-        regencyId = in.readString();
+        id = in.readLong();
+        regencyId = in.readLong();
         name = in.readString();
     }
 
@@ -30,31 +29,19 @@ public class District implements Parcelable {
         }
     };
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(id);
-        dest.writeString(regencyId);
-        dest.writeString(name);
-    }
-
-    public String getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public String getRegencyId() {
+    public long getRegencyId() {
         return regencyId;
     }
 
-    public void setRegencyId(String regencyId) {
+    public void setRegencyId(long regencyId) {
         this.regencyId = regencyId;
     }
 
@@ -66,7 +53,15 @@ public class District implements Parcelable {
         this.name = name;
     }
 
-    public static Creator<District> getCREATOR() {
-        return CREATOR;
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(id);
+        dest.writeLong(regencyId);
+        dest.writeString(name);
     }
 }

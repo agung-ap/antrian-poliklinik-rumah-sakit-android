@@ -1,8 +1,7 @@
 package id.developer.rs_thamrin.api;
 
-import id.developer.rs_thamrin.model.request.CustomerDataRequest;
+import id.developer.rs_thamrin.model.request.CustomerRegisterRequest;
 import id.developer.rs_thamrin.model.request.DoctorDataRequest;
-import id.developer.rs_thamrin.model.request.LoginRequest;
 import id.developer.rs_thamrin.model.request.UserApproveRequest;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -22,7 +21,7 @@ public interface RegisterApi {
             "Content-Type:application/json"
     })
     @POST("/register/customer")
-    Call<ResponseBody> setCustomer(@Body CustomerDataRequest request);
+    Call<ResponseBody> setCustomer(@Body CustomerRegisterRequest request);
 
     @Headers({
             "Content-Type:application/json"

@@ -52,16 +52,19 @@ public interface DataApi {
     @GET("/data/payment")
     Call<ResponseBody> getPayment();
 
+    @GET("/data/address")
+    Call<ResponseBody> getAddress();
+
     @GET("/data/province")
     Call<ResponseBody> getProvince();
 
     @GET("/data/regency")
-    Call<ResponseBody> getRegency(@Query("provinceId") long id,@Query("page") int page );
+    Call<ResponseBody> getRegency(@Query("id") long id);
 
     @GET("/data/district")
-    Call<ResponseBody> getDistrict(@Query("regencyId") long id,@Query("page") int page );
+    Call<ResponseBody> getDistrict(@Query("id") long id);
 
     @GET("/data/village")
-    Call<ResponseBody> getVillage(@Query("districtId") long id,@Query("page") int page );
+    Call<ResponseBody> getVillage(@Query("id") long id);
     
 }

@@ -4,16 +4,26 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Province implements Parcelable {
-    private String id;
+    private long id;
     private String name;
 
     public Province() {
     }
 
-
     protected Province(Parcel in) {
-        id = in.readString();
+        id = in.readLong();
         name = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(id);
+        dest.writeString(name);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     public static final Creator<Province> CREATOR = new Creator<Province>() {
@@ -28,22 +38,11 @@ public class Province implements Parcelable {
         }
     };
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(id);
-        dest.writeString(name);
-    }
-
-    public String getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -53,9 +52,5 @@ public class Province implements Parcelable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public static Creator<Province> getCREATOR() {
-        return CREATOR;
     }
 }

@@ -4,17 +4,16 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Regency implements Parcelable {
-    private String id;
-    private String provinceId;
+    private long id;
+    private long provinceId;
     private String name;
 
     public Regency() {
     }
 
-
     protected Regency(Parcel in) {
-        id = in.readString();
-        provinceId = in.readString();
+        id = in.readLong();
+        provinceId = in.readLong();
         name = in.readString();
     }
 
@@ -30,31 +29,19 @@ public class Regency implements Parcelable {
         }
     };
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(id);
-        dest.writeString(provinceId);
-        dest.writeString(name);
-    }
-
-    public String getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public String getProvinceId() {
+    public long getProvinceId() {
         return provinceId;
     }
 
-    public void setProvinceId(String provinceId) {
+    public void setProvinceId(long provinceId) {
         this.provinceId = provinceId;
     }
 
@@ -66,7 +53,15 @@ public class Regency implements Parcelable {
         this.name = name;
     }
 
-    public static Creator<Regency> getCREATOR() {
-        return CREATOR;
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(id);
+        dest.writeLong(provinceId);
+        dest.writeString(name);
     }
 }

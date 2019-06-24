@@ -1,355 +1,387 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".activity.MainActivity">
 
-    <LinearLayout
+    <ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="8dp"
-        android:gravity="center"
-        android:orientation="vertical">
+        android:layout_weight="1"
+        android:layout_marginBottom="8dp"
+        tools:context=".activity.MainActivity">
 
-        <android.support.design.widget.TextInputLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/first_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:hint="Nama Depan"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:textColor="@android:color/black" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/last_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:hint="Nama Belakang"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:textColor="@android:color/black" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/birth_place"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:hint="Tempat Lahir"
+                    android:inputType="text"
+                    android:maxLines="2"
+                    android:singleLine="true"
+                    android:textColor="@android:color/black" />
+
+            </android.support.design.widget.TextInputLayout>
 
             <EditText
-                android:id="@+id/first_name"
+                android:id="@+id/birth_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginRight="8dp"
                 android:layout_marginLeft="8dp"
-                android:hint="Nama Depan"
+                android:hint="Tanggal Lahir"
+                android:clickable="true"
+                android:focusable="false"
+                android:inputType="date"
+                android:textColor="@android:color/black" />
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/identity_card"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:hint="No identitas"
+                    android:inputType="number"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:textColor="@android:color/black" />
+            </android.support.design.widget.TextInputLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:text="Jenis Identitas"
+                android:textSize="18sp"/>
+
+            <android.support.v7.widget.AppCompatSpinner
+                android:id="@+id/type_of_identity_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginLeft="8dp"
+                android:hint="Jenis Identitas" />
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/family_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:hint="Nama keluarga"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:textColor="@android:color/black" />
+            </android.support.design.widget.TextInputLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:text="Hubungan Keluarga"
+                android:textSize="18sp"/>
+
+            <android.support.v7.widget.AppCompatSpinner
+                android:id="@+id/type_of_family_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginLeft="8dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:text="Gender "
+                android:textSize="18sp"/>
+
+            <android.support.v7.widget.AppCompatSpinner
+                android:id="@+id/gender"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginLeft="8dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:text="Status "
+                android:textSize="18sp"/>
+
+            <android.support.v7.widget.AppCompatSpinner
+                android:id="@+id/maried_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginLeft="8dp"
+                android:hint="Status" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:text="Pendidikan"
+                android:textSize="18sp"/>
+
+            <android.support.v7.widget.AppCompatSpinner
+                android:id="@+id/education"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginLeft="8dp"/>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/phone_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:hint="Nomor telepon / handphone"
+                    android:inputType="number"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:textColor="@android:color/black" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:text="Pekerjaan"
+                android:textSize="18sp"/>
+
+            <android.support.v7.widget.AppCompatSpinner
+                android:id="@+id/job"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginLeft="8dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:text="Tipe Pembayaran"
+                android:textSize="18sp"/>
+
+            <android.support.v7.widget.AppCompatSpinner
+                android:id="@+id/type_of_payment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginLeft="8dp"/>
+
+            <!--<android.support.design.widget.TextInputLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content">-->
+
+            <!--<EditText-->
+            <!--android:id="@+id/country"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginTop="8dp"-->
+            <!--android:layout_marginRight="8dp"-->
+            <!--android:layout_marginLeft="8dp"-->
+            <!--android:hint="Negara"-->
+            <!--android:inputType="number"-->
+            <!--android:maxLines="1"-->
+            <!--android:singleLine="true"-->
+            <!--android:textColor="@android:color/black" />-->
+
+            <!--</android.support.design.widget.TextInputLayout>-->
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:text="Provinsi"
+                android:textSize="18sp"/>
+
+            <android.support.v7.widget.AppCompatSpinner
+                android:id="@+id/province"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginLeft="8dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:text="Kabupaten"
+                android:textSize="18sp"/>
+
+            <android.support.v7.widget.AppCompatSpinner
+                android:id="@+id/regency"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginLeft="8dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:text="Kecamatan"
+                android:textSize="18sp"/>
+
+            <android.support.v7.widget.AppCompatSpinner
+                android:id="@+id/district"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginLeft="8dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:text="Kelurahan"
+                android:textSize="18sp"/>
+
+            <android.support.v7.widget.AppCompatSpinner
+                android:id="@+id/village"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginLeft="8dp" />
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:hint="Alamat"
+                    android:inputType="textMultiLine"
+                    android:maxLines="4"
+                    android:textColor="@android:color/black" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:text="Jenis alamat"
+                android:textSize="18sp"/>
+
+            <android.support.v7.widget.AppCompatSpinner
+                android:id="@+id/type_of_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:hint="Jenis Alamat"
                 android:inputType="text"
+                android:focusable="false"
                 android:maxLines="1"
                 android:singleLine="true"
                 android:textColor="@android:color/black" />
 
-        </android.support.design.widget.TextInputLayout>
+        </LinearLayout>
+    </ScrollView>
 
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+    <Button
+        android:id="@+id/registrasi"
+        style="?android:textAppearanceSmall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/md_blue_700"
+        android:text="Daftar"
+        android:textColor="@android:color/white"
+        android:textStyle="bold" />
 
-            <EditText
-                android:id="@+id/last_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginLeft="8dp"
-                android:hint="Nama Belakang"
-                android:inputType="text"
-                android:maxLines="1"
-                android:singleLine="true"
-                android:textColor="@android:color/black" />
+</LinearLayout>
 
-        </android.support.design.widget.TextInputLayout>
-
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <EditText
-                android:id="@+id/birth_place"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginLeft="8dp"
-                android:hint="Tempat Lahir"
-                android:inputType="text"
-                android:maxLines="2"
-                android:singleLine="true"
-                android:textColor="@android:color/black" />
-
-        </android.support.design.widget.TextInputLayout>
-
-        <EditText
-            android:id="@+id/birth_date"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginLeft="8dp"
-            android:hint="Tanggal Lahir"
-            android:clickable="true"
-            android:focusable="false"
-            android:inputType="date"
-            android:textColor="@android:color/black" />
-
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <EditText
-                android:id="@+id/identity_card"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginLeft="8dp"
-                android:hint="No identitas"
-                android:inputType="number"
-                android:maxLines="1"
-                android:singleLine="true"
-                android:textColor="@android:color/black" />
-        </android.support.design.widget.TextInputLayout>
-
-        <EditText
-            android:id="@+id/type_of_identity_card"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginLeft="8dp"
-            android:hint="Jenis Identitas"
-            android:inputType="text"
-            android:focusable="false"
-            android:maxLines="1"
-            android:singleLine="true"
-            android:textColor="@android:color/black" />
-
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <EditText
-                android:id="@+id/family_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginLeft="8dp"
-                android:hint="Nama keluarga"
-                android:inputType="number"
-                android:maxLines="1"
-                android:singleLine="true"
-                android:textColor="@android:color/black" />
-        </android.support.design.widget.TextInputLayout>
-
-        <EditText
-            android:id="@+id/type_of_family_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginLeft="8dp"
-            android:hint="Jenis Hubungan Keluarga"
-            android:inputType="text"
-            android:focusable="false"
-            android:maxLines="1"
-            android:singleLine="true"
-            android:textColor="@android:color/black" />
-
-        <Spinner
-            android:id="@+id/gender"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginLeft="8dp"/>
-
-        <EditText
-            android:id="@+id/maried_status"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginLeft="8dp"
-            android:hint="Status"
-            android:inputType="text"
-            android:focusable="false"
-            android:maxLines="1"
-            android:singleLine="true"
-            android:textColor="@android:color/black" />
-
-        <EditText
-            android:id="@+id/education"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginLeft="8dp"
-            android:hint="Pendidikan"
-            android:inputType="text"
-            android:focusable="false"
-            android:maxLines="1"
-            android:singleLine="true"
-            android:textColor="@android:color/black" />
-
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <EditText
-                android:id="@+id/phone_number"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginLeft="8dp"
-                android:hint="Nomor telepon / handphone"
-                android:inputType="number"
-                android:maxLines="1"
-                android:singleLine="true"
-                android:textColor="@android:color/black" />
-
-        </android.support.design.widget.TextInputLayout>
-
-        <EditText
-            android:id="@+id/job"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginLeft="8dp"
-            android:hint="Pekerjaan"
-            android:inputType="text"
-            android:focusable="false"
-            android:maxLines="1"
-            android:singleLine="true"
-            android:textColor="@android:color/black" />
-
-        <EditText
-            android:id="@+id/type_of_payment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginLeft="8dp"
-            android:hint="Tipe pembayaran"
-            android:inputType="text"
-            android:focusable="false"
-            android:maxLines="1"
-            android:singleLine="true"
-            android:textColor="@android:color/black" />
-
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <EditText
-                android:id="@+id/country"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginLeft="8dp"
-                android:hint="Negara"
-                android:inputType="number"
-                android:maxLines="1"
-                android:singleLine="true"
-                android:textColor="@android:color/black" />
-
-        </android.support.design.widget.TextInputLayout>
-
-        <EditText
-            android:id="@+id/province"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginLeft="8dp"
-            android:hint="Provinsi"
-            android:inputType="text"
-            android:focusable="false"
-            android:maxLines="1"
-            android:singleLine="true"
-            android:textColor="@android:color/black" />
-
-        <EditText
-            android:id="@+id/regency"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginLeft="8dp"
-            android:hint="Kabupaten"
-            android:inputType="text"
-            android:focusable="false"
-            android:maxLines="1"
-            android:singleLine="true"
-            android:textColor="@android:color/black" />
-
-        <EditText
-            android:id="@+id/district"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginLeft="8dp"
-            android:hint="Kecamatan"
-            android:inputType="text"
-            android:focusable="false"
-            android:maxLines="1"
-            android:singleLine="true"
-            android:textColor="@android:color/black" />
-
-        <EditText
-            android:id="@+id/village"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginLeft="8dp"
-            android:hint="Kelurahan"
-            android:inputType="text"
-            android:focusable="false"
-            android:maxLines="1"
-            android:singleLine="true"
-            android:textColor="@android:color/black" />
-
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <EditText
-                android:id="@+id/address"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginLeft="8dp"
-                android:hint="Alamata"
-                android:inputType="number"
-                android:maxLines="2"
-                android:textColor="@android:color/black" />
-
-        </android.support.design.widget.TextInputLayout>
-
-        <EditText
-            android:id="@+id/type_of_address"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginLeft="8dp"
-            android:hint="Jenis Alamat"
-            android:inputType="text"
-            android:focusable="false"
-            android:maxLines="1"
-            android:singleLine="true"
-            android:textColor="@android:color/black" />
-
-        <Button
-            android:id="@+id/registrasi"
-            style="?android:textAppearanceSmall"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginBottom="8dp"
-            android:background="@color/md_blue_700"
-            android:text="Daftar"
-            android:textColor="@android:color/white"
-            android:textStyle="bold" />
-
-    </LinearLayout>
-</ScrollView>
