@@ -2,9 +2,11 @@ package id.developer.rs_thamrin.util;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -36,12 +38,17 @@ public class GlobalFunction {
         activity.startActivity(intent);
     }
 
-    public static void addInfoCodeAndTimeResponse(Context context, String info, String code, String date){
-        SharedPreferences sharedPreferences = context.getSharedPreferences(context.getString(R.string.RESPONSE),context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(context.getString(R.string.GET_INFO), info);
-        editor.putString(context.getString(R.string.GET_CODE), code);
-        editor.putString(context.getString(R.string.GET_DATE), date);
-        editor.apply();
+    public static void showMessage(Context context,String info){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setMessage(info);
+
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User clicked OK button
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }

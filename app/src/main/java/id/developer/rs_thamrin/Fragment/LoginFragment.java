@@ -1,9 +1,11 @@
 package id.developer.rs_thamrin.Fragment;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -120,7 +122,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
                         }
                     }else {
                         progressDialog.dismiss();
-                        Toast.makeText(getActivity(), object.getString("info"), Toast.LENGTH_SHORT).show();
+                        GlobalFunction.showMessage(getActivity(),object.getString("info"));
+//                        Toast.makeText(getActivity(), object.getString("info"), Toast.LENGTH_SHORT).show();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -151,6 +154,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
                     .commit();
         }
     }
+
 
 
 }

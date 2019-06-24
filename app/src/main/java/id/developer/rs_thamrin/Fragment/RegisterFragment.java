@@ -947,7 +947,7 @@ public class RegisterFragment extends Fragment{
                         sendResponseToAnotherFragment(resp);
                     }else {
                         progressDialog.dismiss();
-                        GlobalFunction.toast(getActivity(), object.getString("info"));
+                        GlobalFunction.showMessage(getActivity(), object.getString("info"));
                     }
 
 
