@@ -2,7 +2,9 @@ package id.developer.rs_thamrin.Fragment;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
@@ -14,6 +16,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.google.gson.JsonObject;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -33,6 +37,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class LoginFragment extends Fragment implements View.OnClickListener{
+    private static final String TAG = LoginFragment.class.getName();
     private EditText userId;
     private EditText password;
     private Button login;
@@ -86,8 +91,10 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
         loginRequest.setUserId(userId.getText().toString().trim());
         loginRequest.setPassword(password.getText().toString().trim());
 
+        Log.i(TAG,"device token "  + getDeviceToken());
+
         LoginApi loginApi = RetrofitBuilder.getApiService().create(LoginApi.class);
-        Call<ResponseBody> callLoginApi = loginApi.setLogin(loginRequest);
+        Call<ResponseBody> callLoginApi = loginApi.setLogin(loginRequest, getDeviceToken());
         callLoginApi.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -116,6 +123,10 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
                             getActivity().finish();
                         }
                         if (userRole.equals("DOKTER")){
+                            JSONObject dokterResponseObject = jsonObject.getJSONObject("userData");
+
+                            GlobalFunction.addTokenAndUserRolePref(getActivity(),token, userRole,
+                                    dokterResponseObject.getString("poliklinikCode"));
                             GlobalFunction.toast(getActivity(), info);
                             GlobalFunction.moveActivity(getActivity(), HomeActivity.class);
                             getActivity().finish();
@@ -155,6 +166,13 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
         }
     }
 
+    private SharedPreferences getSharedPreferences() {
+        return PreferenceManager.getDefaultSharedPreferences(getActivity());
+    }
 
+    private String getDeviceToken() {
+        // Get token stored in SharedPreferences
+        return getSharedPreferences().getString("deviceToken", null);
+    }
 
 }

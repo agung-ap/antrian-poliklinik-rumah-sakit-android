@@ -18,6 +18,18 @@ public interface QueueApi {
     @POST("/queue/addQueue")
     Call<ResponseBody> setQueue(@Query("token") String token,@Body QueueRequest loginRequest);
 
+    @POST("/queue/checkingPatien")
+    Call<ResponseBody> callPatien(@Query("token") String token,
+                                  @Query("userId") String userId);
+
+    @DELETE("/queue/done")
+    Call<ResponseBody> doneChecking(@Query("token") String token,
+                                    @Query("userId") String userId);
+
+    @GET("/queue/listQueue")
+    Call<ResponseBody> getListQueue(@Query("token") String token,
+                                    @Query("poliklinikCode") String poliklinikCode);
+
     @GET("/queue/checkQueue")
     Call<ResponseBody> checkQueue(@Query("token") String token);
 

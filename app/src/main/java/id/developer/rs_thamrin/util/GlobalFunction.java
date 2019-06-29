@@ -8,19 +8,31 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import id.developer.rs_thamrin.R;
 
 import static android.content.ContentValues.TAG;
 
-public class GlobalFunction {
+public class GlobalFunction  {
 
     public static void addTokenAndUserRolePref(Context context, String token, String userRole){
         SharedPreferences sharedPreferences = context.getSharedPreferences(context.getString(R.string.GET_CREDENTIAL),context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(context.getString(R.string.GET_USER_TOKEN), token);
         editor.putString(context.getString(R.string.GET_USER_ROLE), userRole);
+        editor.apply();
+
+    }
+
+    public static void addTokenAndUserRolePref(Context context, String token, String userRole, String poliklinikCode){
+        SharedPreferences sharedPreferences = context.getSharedPreferences(context.getString(R.string.GET_CREDENTIAL),context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(context.getString(R.string.GET_USER_TOKEN), token);
+        editor.putString(context.getString(R.string.GET_USER_ROLE), userRole);
+        editor.putString(context.getString(R.string.GET_POLIKLINIK_CODE), poliklinikCode);
+
         editor.apply();
     }
 
@@ -51,4 +63,5 @@ public class GlobalFunction {
         AlertDialog dialog = builder.create();
         dialog.show();
     }
+
 }

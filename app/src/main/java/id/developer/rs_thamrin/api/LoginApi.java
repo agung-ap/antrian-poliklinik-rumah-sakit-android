@@ -13,10 +13,12 @@ public interface LoginApi {
             "Content-Type:application/json"
     })
     @POST("/login/user")
-    Call<ResponseBody> setLogin(@Body LoginRequest loginRequest);
+    Call<ResponseBody> setLogin(@Body LoginRequest loginRequest,
+                                @Query("deviceToken") String deviceToken);
 
     @POST("/login/session")
-    Call<ResponseBody> sessionCheck(@Query("token") String token);
+    Call<ResponseBody> sessionCheck(@Query("token") String token,
+                                    @Query("deviceToken") String deviceToken);
 
     @POST("/login/logout")
     Call<ResponseBody> setLogout(@Query("token") String token);

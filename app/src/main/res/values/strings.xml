@@ -11,4 +11,5 @@
     <string name="GET_CODE">code</string>
     <string name="GET_DATE">date</string>
     <string name="RESPONSE">response</string>
+    <string name="GET_POLIKLINIK_CODE">poliklinik_code</string>
 </resources>

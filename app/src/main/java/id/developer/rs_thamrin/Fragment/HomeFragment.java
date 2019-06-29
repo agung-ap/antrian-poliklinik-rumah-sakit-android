@@ -26,6 +26,7 @@ import id.developer.rs_thamrin.Fragment.admin.MasterDataAdminFragment;
 import id.developer.rs_thamrin.Fragment.admin.MasterDataListDoctorFragment;
 import id.developer.rs_thamrin.Fragment.admin.PoliklinikListAdminFragment;
 import id.developer.rs_thamrin.Fragment.admin.UserApproveFragment;
+import id.developer.rs_thamrin.Fragment.dokter.QueueListFragment;
 import id.developer.rs_thamrin.Fragment.user.PoliklinikListFragment;
 import id.developer.rs_thamrin.Fragment.user.PoliklinikRegisterFragment;
 import id.developer.rs_thamrin.Fragment.user.PoliklinikRegisterResultFragment;
@@ -64,6 +65,9 @@ public class HomeFragment extends Fragment implements HomeAdapter.Listener{
 
     private String[] adminTitle = {"Poliklinik list", "Master Data Admin", "User Approve", "Master Data Dokter"};
     private int[] adminIcon = {R.drawable.ic_poliklinik_list, R.drawable.ic_master_data, R.drawable.ic_user_approve, R.drawable.ic_master_data_doctor};
+
+    private String[] dokterTitle = {"Antrian Poliklinik"};
+    private int[] dokterIcon = {R.drawable.ic_poliklinik_list};
 
     public HomeFragment() {
 
@@ -112,7 +116,7 @@ public class HomeFragment extends Fragment implements HomeAdapter.Listener{
         if (userRole.equals("DOKTER")){
             menuitem = new ArrayList<>();
             adapter = new HomeAdapter(getActivity(),this);
-            adapter.setData(menuItem(userTitle,userIcon));
+            adapter.setData(menuItem(dokterTitle,dokterIcon));
             homeMenu.setAdapter(adapter);
 
         }
@@ -251,16 +255,16 @@ public class HomeFragment extends Fragment implements HomeAdapter.Listener{
 
                 case 0:
                     getFragmentManager().beginTransaction()
-                            .replace(R.id.fragment_layout_home, new PoliklinikRegisterFragment(), "poliklinik_register_fragment")
+                            .replace(R.id.fragment_layout_home, new QueueListFragment(), "queue_list_fragment")
                             .addToBackStack(null)
                             .commit();
                     break;
-                case 1:
-                    getFragmentManager().beginTransaction()
-                            .replace(R.id.fragment_layout_home, new PoliklinikListFragment(), "poliklinik_list_fragment")
-                            .addToBackStack(null)
-                            .commit();
-                    break;
+//                case 1:
+//                    getFragmentManager().beginTransaction()
+//                            .replace(R.id.fragment_layout_home, new PoliklinikListFragment(), "poliklinik_list_fragment")
+//                            .addToBackStack(null)
+//                            .commit();
+//                    break;
             }
         }
 
