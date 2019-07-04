@@ -942,6 +942,7 @@ public class RegisterFragment extends Fragment{
                         resp.setInfo(object.getString("info"));
                         resp.setName(jsonObject.getString("name"));
                         resp.setRmId(jsonObject.getString("rmId"));
+                        resp.setPassword(jsonObject.getString("password"));
                         resp.setCreatedDate(jsonObject.getString("createdDate"));
 
                         sendResponseToAnotherFragment(resp);

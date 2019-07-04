@@ -22,6 +22,7 @@ public class RegisterFragmentResult extends Fragment {
 
     private TextView message;
     private TextView rmId;
+    private TextView password;
     private TextView customerName;
     private TextView createdDate;
 
@@ -68,11 +69,13 @@ public class RegisterFragmentResult extends Fragment {
 
         message = view.findViewById(R.id.customer_message_result);
         rmId = view.findViewById(R.id.customer_rm_id_result);
+        password = view.findViewById(R.id.customer_password_result);
         customerName = view.findViewById(R.id.customer_name_result);
         createdDate = view.findViewById(R.id.customer_created_date_result);
 
         message.setText(responses.get(0).getInfo());
         rmId.setText(responses.get(0).getRmId());
+        password.setText(responses.get(0).getPassword());
         customerName.setText(responses.get(0).getName());
         createdDate.setText("Tanggal registrasi " + responses.get(0).getCreatedDate());
     }

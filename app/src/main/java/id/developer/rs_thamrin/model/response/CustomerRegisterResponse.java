@@ -6,30 +6,12 @@ import android.os.Parcelable;
 public class CustomerRegisterResponse implements Parcelable {
     private String info;
     private String RmId;
+    private String password;
     private String createdDate;
     private String name;
 
     public CustomerRegisterResponse() {
     }
-
-    protected CustomerRegisterResponse(Parcel in) {
-        info = in.readString();
-        RmId = in.readString();
-        createdDate = in.readString();
-        name = in.readString();
-    }
-
-    public static final Creator<CustomerRegisterResponse> CREATOR = new Creator<CustomerRegisterResponse>() {
-        @Override
-        public CustomerRegisterResponse createFromParcel(Parcel in) {
-            return new CustomerRegisterResponse(in);
-        }
-
-        @Override
-        public CustomerRegisterResponse[] newArray(int size) {
-            return new CustomerRegisterResponse[size];
-        }
-    };
 
     public String getInfo() {
         return info;
@@ -45,6 +27,14 @@ public class CustomerRegisterResponse implements Parcelable {
 
     public void setRmId(String rmId) {
         RmId = rmId;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getCreatedDate() {
@@ -63,6 +53,30 @@ public class CustomerRegisterResponse implements Parcelable {
         this.name = name;
     }
 
+    public static Creator<CustomerRegisterResponse> getCREATOR() {
+        return CREATOR;
+    }
+
+    protected CustomerRegisterResponse(Parcel in) {
+        info = in.readString();
+        RmId = in.readString();
+        password = in.readString();
+        createdDate = in.readString();
+        name = in.readString();
+    }
+
+    public static final Creator<CustomerRegisterResponse> CREATOR = new Creator<CustomerRegisterResponse>() {
+        @Override
+        public CustomerRegisterResponse createFromParcel(Parcel in) {
+            return new CustomerRegisterResponse(in);
+        }
+
+        @Override
+        public CustomerRegisterResponse[] newArray(int size) {
+            return new CustomerRegisterResponse[size];
+        }
+    };
+
     @Override
     public int describeContents() {
         return 0;
@@ -72,6 +86,7 @@ public class CustomerRegisterResponse implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(info);
         dest.writeString(RmId);
+        dest.writeString(password);
         dest.writeString(createdDate);
         dest.writeString(name);
     }
