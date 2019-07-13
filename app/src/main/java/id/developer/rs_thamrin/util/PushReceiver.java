@@ -1,5 +1,6 @@
 package id.developer.rs_thamrin.util;
 
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
@@ -27,15 +28,16 @@ public class PushReceiver extends BroadcastReceiver {
         }
 
         // Prepare a notification with vibration, sound and lights
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
+        Notification.Builder builder = new Notification.Builder(context)
                 .setAutoCancel(true)
                 .setSmallIcon(R.mipmap.ic_launcher_round)
+//                .setStyle(new NotificationCompat.BigTextStyle().bigText(notificationTitle))
                 .setContentTitle(notificationTitle)
                 .setContentText(notificationText)
                 .setLights(Color.RED, 1000, 1000)
                 .setVibrate(new long[]{0, 400, 250, 400})
-                .setColor(context.getResources().getColor(R.color.colorPrimary))
-                .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
+//                .setColor(context.getResources().getColor(R.color.colorPrimary))
+                .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM))
                 .setContentIntent(PendingIntent.getActivity(context, 0, new Intent(context, HomeActivity.class), PendingIntent.FLAG_UPDATE_CURRENT));
 
         // Automatically configure a Notification Channel for devices running Android O+

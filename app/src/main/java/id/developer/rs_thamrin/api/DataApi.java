@@ -8,6 +8,8 @@ import retrofit2.http.Field;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface DataApi {
@@ -17,6 +19,14 @@ public interface DataApi {
     @POST("/data/input/poliklinik")
     Call<ResponseBody> setPoliklinik(@Query("token") String token,
                                      @Body PoliklinikRequest request);
+
+    @Headers({
+            "Content-Type:application/json"
+    })
+    @PUT("/data/input/poliklinik/{id}")
+    Call<ResponseBody> updatePoliklinik(@Path("id") long id,
+                                        @Query("token") String token,
+                                        @Body PoliklinikRequest request);
 
     @GET("/data/userDetail")
     Call<ResponseBody> getUserDetail(@Query("token") String token,

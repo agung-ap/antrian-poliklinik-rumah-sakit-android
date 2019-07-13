@@ -75,7 +75,7 @@ public class RegisterFragmentResult extends Fragment {
 
         message.setText(responses.get(0).getInfo());
         rmId.setText(responses.get(0).getRmId());
-        password.setText(responses.get(0).getPassword());
+        password.setText(responses.get(0).getPassword() );
         customerName.setText(responses.get(0).getName());
         createdDate.setText("Tanggal registrasi " + responses.get(0).getCreatedDate());
     }

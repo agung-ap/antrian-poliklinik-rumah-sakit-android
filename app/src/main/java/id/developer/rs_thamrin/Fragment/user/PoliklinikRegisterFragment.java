@@ -69,7 +69,7 @@ public class PoliklinikRegisterFragment extends Fragment implements View.OnClick
     private String userRole;
     private String token;
     private String date;
-    private boolean status = true;
+    private boolean status;
 
     private View view;
 
@@ -97,7 +97,7 @@ public class PoliklinikRegisterFragment extends Fragment implements View.OnClick
         userRole = preferences.getString(getString(R.string.GET_USER_ROLE),"default");
         token = preferences.getString(getString(R.string.GET_USER_TOKEN),"default");
 
-        status = getArguments().getBoolean("status");
+        status = getArguments().getBoolean("status", false);
     }
 
     @Override
@@ -150,6 +150,8 @@ public class PoliklinikRegisterFragment extends Fragment implements View.OnClick
 
         cancelQueue = view.findViewById(R.id.cancel_queue);
     }
+
+
 
     private void bindView(View view){
         paymentNumber = view.findViewById(R.id.payment_number);

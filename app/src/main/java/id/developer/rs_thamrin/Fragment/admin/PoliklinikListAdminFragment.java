@@ -73,8 +73,14 @@ public class PoliklinikListAdminFragment extends Fragment implements PoliklinikL
         addPoliklinik.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putBoolean("isEdit", false);
+
+                PoliklinikInputFragment fragment = new PoliklinikInputFragment();
+                fragment.setArguments(bundle);
+
                 getFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_layout_home, new PoliklinikInputFragment(), "poliklinik_input_fragment")
+                        .replace(R.id.fragment_layout_home, fragment, "poliklinik_input_fragment")
                         .addToBackStack(null)
                         .commit();
             }
@@ -118,6 +124,9 @@ public class PoliklinikListAdminFragment extends Fragment implements PoliklinikL
                             Poliklinik poliklinik = new Poliklinik();
                             poliklinik.setId(jsonObject.getInt("id"));
                             poliklinik.setCode(jsonObject.getString("code"));
+                            poliklinik.setDoctorId(jsonObject.getInt("doctorId"));
+                            poliklinik.setScheduleId(jsonObject.getInt("scheduleId"));
+                            poliklinik.setPoliklinikNameId(jsonObject.getInt("specializationId"));
                             poliklinik.setSchedule(jsonObject.getString("schedule"));
                             poliklinik.setTime(jsonObject.getString("time"));
                             poliklinik.setDoctorName(jsonObject.getString("doctorName"));
@@ -161,6 +170,8 @@ public class PoliklinikListAdminFragment extends Fragment implements PoliklinikL
                 .addToBackStack(null)
                 .commit();
     }
+
+
 
 //    @Override
 //    public boolean onOptionsItemSelected(MenuItem item) {

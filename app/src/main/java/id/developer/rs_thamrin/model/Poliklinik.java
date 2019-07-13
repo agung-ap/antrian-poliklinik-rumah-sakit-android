@@ -7,6 +7,9 @@ import java.io.Serializable;
 
 public class Poliklinik implements Parcelable {
        private int id;
+       private int scheduleId;
+       private int poliklinikNameId;
+       private int doctorId;
        private String code;
        private String schedule;
        private String time;
@@ -18,50 +21,36 @@ public class Poliklinik implements Parcelable {
 
        }
 
-       protected Poliklinik(Parcel in) {
-              id = in.readInt();
-              code = in.readString();
-              schedule = in.readString();
-              time = in.readString();
-              doctorName = in.readString();
-              poliklinikName = in.readString();
-              kuota = in.readInt();
-       }
-
-       public static final Creator<Poliklinik> CREATOR = new Creator<Poliklinik>() {
-              @Override
-              public Poliklinik createFromParcel(Parcel in) {
-                     return new Poliklinik(in);
-              }
-
-              @Override
-              public Poliklinik[] newArray(int size) {
-                     return new Poliklinik[size];
-              }
-       };
-
-       @Override
-       public int describeContents() {
-              return 0;
-       }
-
-       @Override
-       public void writeToParcel(Parcel dest, int flags) {
-              dest.writeInt(id);
-              dest.writeString(code);
-              dest.writeString(schedule);
-              dest.writeString(time);
-              dest.writeString(doctorName);
-              dest.writeString(poliklinikName);
-              dest.writeInt(kuota);
-       }
-
        public int getId() {
               return id;
        }
 
        public void setId(int id) {
               this.id = id;
+       }
+
+       public int getScheduleId() {
+              return scheduleId;
+       }
+
+       public void setScheduleId(int scheduleId) {
+              this.scheduleId = scheduleId;
+       }
+
+       public int getPoliklinikNameId() {
+              return poliklinikNameId;
+       }
+
+       public void setPoliklinikNameId(int poliklinikNameId) {
+              this.poliklinikNameId = poliklinikNameId;
+       }
+
+       public int getDoctorId() {
+              return doctorId;
+       }
+
+       public void setDoctorId(int doctorId) {
+              this.doctorId = doctorId;
        }
 
        public String getCode() {
@@ -114,5 +103,49 @@ public class Poliklinik implements Parcelable {
 
        public static Creator<Poliklinik> getCREATOR() {
               return CREATOR;
+       }
+
+       protected Poliklinik(Parcel in) {
+              id = in.readInt();
+              scheduleId = in.readInt();
+              poliklinikNameId = in.readInt();
+              doctorId = in.readInt();
+              code = in.readString();
+              schedule = in.readString();
+              time = in.readString();
+              doctorName = in.readString();
+              poliklinikName = in.readString();
+              kuota = in.readInt();
+       }
+
+       public static final Creator<Poliklinik> CREATOR = new Creator<Poliklinik>() {
+              @Override
+              public Poliklinik createFromParcel(Parcel in) {
+                     return new Poliklinik(in);
+              }
+
+              @Override
+              public Poliklinik[] newArray(int size) {
+                     return new Poliklinik[size];
+              }
+       };
+
+       @Override
+       public int describeContents() {
+              return 0;
+       }
+
+       @Override
+       public void writeToParcel(Parcel dest, int flags) {
+              dest.writeInt(id);
+              dest.writeInt(scheduleId);
+              dest.writeInt(poliklinikNameId);
+              dest.writeInt(doctorId);
+              dest.writeString(code);
+              dest.writeString(schedule);
+              dest.writeString(time);
+              dest.writeString(doctorName);
+              dest.writeString(poliklinikName);
+              dest.writeInt(kuota);
        }
 }

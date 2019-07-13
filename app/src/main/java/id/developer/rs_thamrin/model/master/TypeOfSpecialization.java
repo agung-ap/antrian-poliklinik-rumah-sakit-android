@@ -4,12 +4,20 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class TypeOfSpecialization implements Parcelable {
+    private int id;
     private String code;
     private String name;
 
     public TypeOfSpecialization() {
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getCode() {
         return code;
@@ -32,6 +40,7 @@ public class TypeOfSpecialization implements Parcelable {
     }
 
     protected TypeOfSpecialization(Parcel in) {
+        id = in.readInt();
         code = in.readString();
         name = in.readString();
     }
@@ -55,6 +64,7 @@ public class TypeOfSpecialization implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
         dest.writeString(code);
         dest.writeString(name);
     }
