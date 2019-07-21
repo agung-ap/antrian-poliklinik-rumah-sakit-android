@@ -1,28 +1,29 @@
 package id.developer.rs_thamrin.Fragment.admin;
 
+import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.widget.AppCompatSpinner;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import id.developer.rs_thamrin.R;
@@ -30,9 +31,9 @@ import id.developer.rs_thamrin.activity.HomeActivity;
 import id.developer.rs_thamrin.api.DataApi;
 import id.developer.rs_thamrin.api.RegisterApi;
 import id.developer.rs_thamrin.api.RetrofitBuilder;
-import id.developer.rs_thamrin.model.DoctorData;
-import id.developer.rs_thamrin.model.master.TypeOfSpecialization;
-import id.developer.rs_thamrin.model.request.DoctorDataRequest;
+import id.developer.rs_thamrin.model.AdminData;
+import id.developer.rs_thamrin.model.request.AdminRegisterRequest;
+import id.developer.rs_thamrin.model.response.AdminRegisterResponse;
 import id.developer.rs_thamrin.model.response.DoctorDataResponse;
 import id.developer.rs_thamrin.util.GlobalFunction;
 import okhttp3.ResponseBody;
@@ -40,30 +41,27 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MasterDataDoctorInputFragment extends Fragment {
+public class AdminDataInputFragment extends Fragment {
     private SharedPreferences preferences;
     private String userRole, token;
     private String specializationCode;
 
     private boolean isEdit = false;
-    private List<DoctorData> doctorList;
+    private List<AdminData> adminDataList;
 
     private EditText userId;
     private EditText firstName;
     private EditText lastName;
+    private EditText birthPlace;
+    private EditText birthDate;
     private EditText address;
-
-    private AppCompatSpinner specialization;
-
-    private List<String> specializationName;
-    private List<TypeOfSpecialization> specializationList;
 
     private Calendar myCalendar = Calendar.getInstance();
 
     private Button save;
 
-    public MasterDataDoctorInputFragment() {
-
+    public AdminDataInputFragment() {
+        // Required empty public constructor
     }
 
     @Override
@@ -74,36 +72,49 @@ public class MasterDataDoctorInputFragment extends Fragment {
         token = preferences.getString(getString(R.string.GET_USER_TOKEN),"default");
 
         isEdit = getArguments().getBoolean("isEdit", false);
-        doctorList = getArguments().getParcelableArrayList(getString(R.string.GET_SELECTED_ITEM));
+        adminDataList = getArguments().getParcelableArrayList(getString(R.string.GET_SELECTED_ITEM));
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_master_data_doctor_input, container, false);
+        View view = inflater.inflate(R.layout.fragment_admin_data_input, container, false);
         if (isEdit){
-            ((HomeActivity)getActivity()).getSupportActionBar().setTitle("Edit Dokter");
+            ((HomeActivity)getActivity()).getSupportActionBar().setTitle("Edit Admin");
             ((HomeActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }else {
-            ((HomeActivity)getActivity()).getSupportActionBar().setTitle("Input Dokter");
+            ((HomeActivity)getActivity()).getSupportActionBar().setTitle("Input Admin");
             ((HomeActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
         bindView(view);
-        getSpecialization();
+
+        birthDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDatePickerDialog();
+            }
+        });
 
         if (isEdit){
-            userId.setText(String.valueOf(doctorList.get(0).getUserId()));
-            firstName.setText(String.valueOf(doctorList.get(0).getFirsName()));
-            lastName.setText(String.valueOf(doctorList.get(0).getLastName()));
-            address.setText(String.valueOf(doctorList.get(0).getAddress()));
+            try {
+                Date d = new SimpleDateFormat("yyyy-MM-dd").parse(adminDataList.get(0).getBirthDate());
+                birthDate.setText(new SimpleDateFormat("dd MMM yyyy").format(d));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            userId.setText(String.valueOf(adminDataList.get(0).getUserId()));
+            firstName.setText(String.valueOf(adminDataList.get(0).getFirstName()));
+            lastName.setText(String.valueOf(adminDataList.get(0).getLastName()));
+            birthPlace.setText(String.valueOf(adminDataList.get(0).getBirthPlace()));
+            address.setText(String.valueOf(adminDataList.get(0).getAddress()));
         }
 
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                handleDoctorRegister();
+                handleAdminRegister();
             }
         });
 
@@ -112,96 +123,35 @@ public class MasterDataDoctorInputFragment extends Fragment {
     }
 
     private void bindView(View view) {
-        userId = view.findViewById(R.id.user_id_dokter);
-        firstName = view.findViewById(R.id.first_name_dokter);
-        lastName = view.findViewById(R.id.last_name_dokter);
-        address = view.findViewById(R.id.address_dokter);
+        userId = view.findViewById(R.id.user_id_admin);
+        firstName = view.findViewById(R.id.first_name_admin);
+        lastName = view.findViewById(R.id.last_name_admin);
+        birthDate = view.findViewById(R.id.birth_date_admin);
+        birthPlace = view.findViewById(R.id.birth_place_admin);
+        address = view.findViewById(R.id.address_admin);
 
-        specialization = view.findViewById(R.id.specialization_dokter);
-
-        save = view.findViewById(R.id.dokter_input_save);
+        save = view.findViewById(R.id.admin_input_save);
     }
 
-    private void getSpecialization(){
-        specializationName = new ArrayList<>();
-        specializationList = new ArrayList<>();
+    final DatePickerDialog.OnDateSetListener mdate = new DatePickerDialog.OnDateSetListener(){
+        @Override
+        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+            myCalendar.set(Calendar.YEAR, year);
+            myCalendar.set(Calendar.MONTH, month);
+            myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
-        DataApi dataApi = RetrofitBuilder.getApiService().create(DataApi.class);
-        Call<ResponseBody> callDataApi = dataApi.getSpecialization();
-        callDataApi.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                try {
-                    JSONObject object = new JSONObject(response.body().string());
-                    if (object.getInt("code") == 0){
-                        JSONArray jsonArray = object.getJSONArray("data");
-                        if (!isEdit){
-                            specializationList.add(null);
-                            specializationName.add("");
-                        }else {
-                            specializationName.add("");
-                        }
+            SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy");
+            birthDate.setText(sdf.format(myCalendar.getTime()));
+        }
+    };
 
-                        for (int i = 0; i < jsonArray.length(); i++){
-                            JSONObject jsonObject = jsonArray.getJSONObject(i);
-
-                            TypeOfSpecialization specialization = new TypeOfSpecialization();
-                            specialization.setName(jsonObject.getString("name"));
-                            specialization.setCode(jsonObject.getString("code"));
-
-                            specializationName.add(specialization.getName());
-                            specializationList.add(specialization);
-                        }
-
-                        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-                                getActivity(),android.R.layout.simple_spinner_item,
-                                specializationName);
-                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                        specialization.setAdapter(adapter);
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-
-            }
-        });
-
-        specialization.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-                if (isEdit){
-                    if (position == 0){
-                        specialization.setSelection(doctorList.get(0).getSpecializationId());
-                        specializationCode = specializationList.get(position).getCode();
-                    }else {
-                        specialization.setSelection(position, true);
-                        specializationCode = specializationList.get(position - 1).getCode();
-                    }
-                }else {
-                    if (position == 0){
-                        specialization.setSelection(position, true);
-                        specializationCode = "";
-                    }else {
-                        specializationCode = specializationList.get(position).getCode();
-                    }
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
+    private void showDatePickerDialog(){
+        DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), mdate, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH));
+        datePickerDialog.show();
     }
 
-    private void handleDoctorRegister(){
+    private void handleAdminRegister(){
+
         ProgressDialog progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage("Please wait...");
         progressDialog.show();
@@ -225,22 +175,40 @@ public class MasterDataDoctorInputFragment extends Fragment {
             return;
         }
 
+        if (TextUtils.isEmpty(birthDate.getText().toString())){
+            userId.setError("last name tidak boleh kosong");
+            progressDialog.dismiss();
+            return;
+        }
+
+        if (TextUtils.isEmpty(birthPlace.getText().toString())){
+            userId.setError("last name tidak boleh kosong");
+            progressDialog.dismiss();
+            return;
+        }
+
         if (TextUtils.isEmpty(address.getText().toString())){
             userId.setError("address tidak boleh kosong");
             progressDialog.dismiss();
             return;
         }
 
-        DoctorDataRequest request = new DoctorDataRequest();
-        request.setDokterId(userId.getText().toString().trim());
+        AdminRegisterRequest request = new AdminRegisterRequest();
+        request.setAdminId(userId.getText().toString().trim());
         request.setFirstName(firstName.getText().toString().trim());
         request.setLastName(lastName.getText().toString().trim());
+        request.setBirthPlace(birthPlace.getText().toString().trim());
+        try {
+            Date d = new SimpleDateFormat("dd MMM yyyy").parse(birthDate.getText().toString().trim());
+            request.setBirthDate(new SimpleDateFormat("yyyy-MM-dd").format(d));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         request.setAddress(address.getText().toString().trim());
-        request.setSpecialization(specializationCode);
 
         if (isEdit){
             DataApi dataApi = RetrofitBuilder.getApiService().create(DataApi.class);
-            Call<ResponseBody> callDataApi = dataApi.updateDokter(doctorList.get(0).getId(), token, request);
+            Call<ResponseBody> callDataApi = dataApi.updateAdmin(adminDataList.get(0).getId(), token, request);
             callDataApi.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -282,7 +250,7 @@ public class MasterDataDoctorInputFragment extends Fragment {
 
         }else {
             RegisterApi registerApi = RetrofitBuilder.getApiService().create(RegisterApi.class);
-            Call<ResponseBody> callRegisterApi = registerApi.setDokter(token, request);
+            Call<ResponseBody> callRegisterApi = registerApi.setAdmin(token, request);
             callRegisterApi.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -293,13 +261,12 @@ public class MasterDataDoctorInputFragment extends Fragment {
                             progressDialog.dismiss();
                             JSONObject jsonObject = object.getJSONObject("data");
 
-                            DoctorDataResponse dataResponse = new DoctorDataResponse();
+                            AdminRegisterResponse dataResponse = new AdminRegisterResponse();
+                            dataResponse.setInfo(object.getString("info"));
+                            dataResponse.setAdminId(jsonObject.getString("adminId"));
                             dataResponse.setCreatedDate(jsonObject.getString("createdDate"));
-                            dataResponse.setDokterId(jsonObject.getString("dokterId"));
-                            dataResponse.setPassword(jsonObject.getString("password"));
                             dataResponse.setName(jsonObject.getString("name"));
-                            dataResponse.setSpecialization(jsonObject.getString("specialization"));
-                            dataResponse.setMessage(object.getString("info"));
+                            dataResponse.setPassword(jsonObject.getString("password"));
 
                             sendResponseToAnotherFragment(dataResponse);
                         }else {
@@ -321,22 +288,20 @@ public class MasterDataDoctorInputFragment extends Fragment {
                 }
             });
         }
-
     }
 
-    private void sendResponseToAnotherFragment(DoctorDataResponse response){
+    private void sendResponseToAnotherFragment(AdminRegisterResponse response){
         Bundle bundle = new Bundle();
-        ArrayList<DoctorDataResponse> doctorResponseList = new ArrayList<>();
-        doctorResponseList.add(response);
-        bundle.putParcelableArrayList(getString(R.string.GET_SELECTED_ITEM), doctorResponseList);
+        ArrayList<AdminRegisterResponse> list = new ArrayList<>();
+        list.add(response);
+        bundle.putParcelableArrayList(getString(R.string.GET_SELECTED_ITEM), list);
 
-        DoctorInputResultFragment fragment = new DoctorInputResultFragment();
+        AdminDataInputResultFragment fragment = new AdminDataInputResultFragment();
         fragment.setArguments(bundle);
 
         getFragmentManager().beginTransaction()
-                .replace(R.id.fragment_layout_home, fragment, "doctor_register_result_fragment")
+                .replace(R.id.fragment_layout_home, fragment, "admin_register_result_fragment")
                 .addToBackStack(null)
                 .commit();
     }
-
 }

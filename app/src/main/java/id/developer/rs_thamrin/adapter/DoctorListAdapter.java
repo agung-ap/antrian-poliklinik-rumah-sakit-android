@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import id.developer.rs_thamrin.R;
-import id.developer.rs_thamrin.model.master.DoctorData;
+import id.developer.rs_thamrin.model.DoctorData;
 
 public class DoctorListAdapter  extends RecyclerView.Adapter<DoctorListAdapter.ViewHolder> {
     private Context context;

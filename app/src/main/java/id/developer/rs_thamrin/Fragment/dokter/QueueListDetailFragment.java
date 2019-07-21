@@ -1,10 +1,8 @@
 package id.developer.rs_thamrin.Fragment.dokter;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -23,12 +21,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import id.developer.rs_thamrin.Fragment.admin.UserApprovalResultFragment;
 import id.developer.rs_thamrin.R;
 import id.developer.rs_thamrin.activity.HomeActivity;
 import id.developer.rs_thamrin.api.QueueApi;
 import id.developer.rs_thamrin.api.RetrofitBuilder;
-import id.developer.rs_thamrin.model.master.DoctorData;
 import id.developer.rs_thamrin.model.response.QueueListResponse;
 import id.developer.rs_thamrin.util.GlobalFunction;
 import okhttp3.ResponseBody;

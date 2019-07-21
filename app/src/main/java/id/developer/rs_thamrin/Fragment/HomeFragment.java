@@ -4,8 +4,6 @@ import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -22,14 +20,13 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import id.developer.rs_thamrin.Fragment.admin.MasterDataAdminFragment;
+import id.developer.rs_thamrin.Fragment.admin.AdminDataListFragment;
 import id.developer.rs_thamrin.Fragment.admin.MasterDataListDoctorFragment;
 import id.developer.rs_thamrin.Fragment.admin.PoliklinikListAdminFragment;
 import id.developer.rs_thamrin.Fragment.admin.UserApproveFragment;
 import id.developer.rs_thamrin.Fragment.dokter.QueueListFragment;
 import id.developer.rs_thamrin.Fragment.user.PoliklinikListFragment;
 import id.developer.rs_thamrin.Fragment.user.PoliklinikRegisterFragment;
-import id.developer.rs_thamrin.Fragment.user.PoliklinikRegisterResultFragment;
 import id.developer.rs_thamrin.R;
 import id.developer.rs_thamrin.activity.HomeActivity;
 import id.developer.rs_thamrin.activity.MainActivity;
@@ -38,7 +35,6 @@ import id.developer.rs_thamrin.api.LoginApi;
 import id.developer.rs_thamrin.api.QueueApi;
 import id.developer.rs_thamrin.api.RetrofitBuilder;
 import id.developer.rs_thamrin.model.MenuItemModel;
-import id.developer.rs_thamrin.model.response.QueueResponse;
 import id.developer.rs_thamrin.util.GlobalFunction;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -139,6 +135,12 @@ public class HomeFragment extends Fragment implements HomeAdapter.Listener{
             case R.id.logout_menu :
                 logout(token);
                 break;
+            case R.id.change_password_menu :
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_layout_home, new ChangePasswordFragment(), "change_password_fragment")
+                        .addToBackStack(null)
+                        .commit();
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -231,7 +233,7 @@ public class HomeFragment extends Fragment implements HomeAdapter.Listener{
                     break;
                 case 1:
                     getFragmentManager().beginTransaction()
-                            .replace(R.id.fragment_layout_home, new MasterDataAdminFragment(), "master_data_fragment")
+                            .replace(R.id.fragment_layout_home, new AdminDataListFragment(), "admin_data_list_fragment")
                             .addToBackStack(null)
                             .commit();
                     break;

@@ -1,5 +1,6 @@
 package id.developer.rs_thamrin.api;
 
+import id.developer.rs_thamrin.model.request.AdminRegisterRequest;
 import id.developer.rs_thamrin.model.request.CustomerRegisterRequest;
 import id.developer.rs_thamrin.model.request.DoctorDataRequest;
 import id.developer.rs_thamrin.model.request.UserApproveRequest;
@@ -29,4 +30,8 @@ public interface RegisterApi {
     @POST("/register/doctor")
     Call<ResponseBody> setDokter(@Query("token") String token,
                                  @Body DoctorDataRequest request);
+
+    @POST("/register/admin")
+    Call<ResponseBody> setAdmin(@Query("token") String token,
+                                 @Body AdminRegisterRequest request);
 }

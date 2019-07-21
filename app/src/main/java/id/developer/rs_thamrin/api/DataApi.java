@@ -1,10 +1,12 @@
 package id.developer.rs_thamrin.api;
 
+import id.developer.rs_thamrin.model.request.AdminRegisterRequest;
+import id.developer.rs_thamrin.model.request.DoctorDataRequest;
 import id.developer.rs_thamrin.model.request.PoliklinikRequest;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
-import retrofit2.http.Field;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
@@ -28,6 +30,34 @@ public interface DataApi {
                                         @Query("token") String token,
                                         @Body PoliklinikRequest request);
 
+    @DELETE("/data/delete/poliklinik/{id}")
+    Call<ResponseBody> deletePoliklinik(@Path("id") long id,
+                                        @Query("token") String token);
+
+    @Headers({
+            "Content-Type:application/json"
+    })
+    @PUT("/data/dokter/{id}")
+    Call<ResponseBody> updateDokter(@Path("id") long id,
+                                    @Query("token") String token,
+                                    @Body DoctorDataRequest request);
+
+    @DELETE("/data/dokter/{id}")
+    Call<ResponseBody> deleteDokter(@Path("id") long id,
+                                    @Query("token") String token);
+
+    @Headers({
+            "Content-Type:application/json"
+    })
+    @PUT("/data/admin/{id}")
+    Call<ResponseBody> updateAdmin(@Path("id") long id,
+                                   @Query("token") String token,
+                                   @Body AdminRegisterRequest request);
+
+    @DELETE("/data/admin/{id}")
+    Call<ResponseBody> deleteAdmin(@Path("id") long id,
+                                   @Query("token") String token);
+
     @GET("/data/userDetail")
     Call<ResponseBody> getUserDetail(@Query("token") String token,
                                      @Query("userId") String userId);
@@ -37,6 +67,9 @@ public interface DataApi {
 
     @GET("/data/dokter")
     Call<ResponseBody> getDokter();
+
+    @GET("/data/admin")
+    Call<ResponseBody> getAdmin();
 
     @GET("/data/schedule")
     Call<ResponseBody> getSchedule();

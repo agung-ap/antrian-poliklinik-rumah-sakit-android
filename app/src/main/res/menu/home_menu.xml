@@ -7,5 +7,10 @@
         android:title="Logout"
         android:icon="@drawable/ic_logout"
         app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/change_password_menu"
+        android:title="Change Password"
+        android:icon="@drawable/ic_password"
+        app:showAsAction="ifRoom" />
 
 </menu>

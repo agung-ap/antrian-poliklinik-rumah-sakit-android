@@ -5,10 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.app.ListFragment;
 import android.support.v7.widget.AppCompatSpinner;
-import android.support.v7.widget.ScrollingTabContainerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,15 +23,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import id.developer.rs_thamrin.Fragment.HomeFragment;
-import id.developer.rs_thamrin.Fragment.user.PoliklinikListFragment;
-import id.developer.rs_thamrin.Fragment.user.PoliklinikRegisterFragment;
 import id.developer.rs_thamrin.R;
 import id.developer.rs_thamrin.activity.HomeActivity;
 import id.developer.rs_thamrin.api.DataApi;
 import id.developer.rs_thamrin.api.RetrofitBuilder;
 import id.developer.rs_thamrin.model.Poliklinik;
-import id.developer.rs_thamrin.model.master.DoctorData;
+import id.developer.rs_thamrin.model.DoctorData;
 import id.developer.rs_thamrin.model.master.TypeOfSchedule;
 import id.developer.rs_thamrin.model.master.TypeOfSpecialization;
 import id.developer.rs_thamrin.model.request.PoliklinikRequest;
@@ -42,8 +36,6 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import static android.support.constraint.Constraints.TAG;
 
 
 public class PoliklinikInputFragment extends Fragment {

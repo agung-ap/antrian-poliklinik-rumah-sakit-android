@@ -60,8 +60,7 @@ public class GlobalFunction  {
             }
         });
 
-        AlertDialog dialog = builder.create();
-        dialog.show();
+        builder.create().show();
     }
 
 }

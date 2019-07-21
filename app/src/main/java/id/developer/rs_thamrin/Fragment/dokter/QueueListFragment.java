@@ -1,11 +1,8 @@
 package id.developer.rs_thamrin.Fragment.dokter;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -23,19 +20,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import id.developer.rs_thamrin.Fragment.user.PoliklinikDetailFragment;
 import id.developer.rs_thamrin.R;
 import id.developer.rs_thamrin.activity.HomeActivity;
-import id.developer.rs_thamrin.adapter.DoctorListAdapter;
-import id.developer.rs_thamrin.adapter.PoliklinikListAdapter;
 import id.developer.rs_thamrin.adapter.QueueListAdapter;
 import id.developer.rs_thamrin.api.QueueApi;
 import id.developer.rs_thamrin.api.RetrofitBuilder;
-import id.developer.rs_thamrin.model.Poliklinik;
-import id.developer.rs_thamrin.model.master.DoctorData;
 import id.developer.rs_thamrin.model.response.QueueListResponse;
-import id.developer.rs_thamrin.model.response.QueueResponse;
-import id.developer.rs_thamrin.util.GlobalFunction;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;

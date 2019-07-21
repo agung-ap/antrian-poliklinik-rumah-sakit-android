@@ -21,82 +21,83 @@ import java.util.List;
 
 import id.developer.rs_thamrin.R;
 import id.developer.rs_thamrin.activity.HomeActivity;
-import id.developer.rs_thamrin.adapter.DoctorListAdapter;
+import id.developer.rs_thamrin.adapter.AdminListAdapter;
 import id.developer.rs_thamrin.api.DataApi;
 import id.developer.rs_thamrin.api.RetrofitBuilder;
-import id.developer.rs_thamrin.model.DoctorData;
+import id.developer.rs_thamrin.model.AdminData;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MasterDataListDoctorFragment extends Fragment implements DoctorListAdapter.Listener{
-
+public class AdminDataListFragment extends Fragment implements AdminListAdapter.Listener{
     private RecyclerView recyclerView;
-    private DoctorListAdapter adapter;
-    private List<DoctorData> doctorDataList;
+    private AdminListAdapter adapter;
+    private List<AdminData> adminList;
     private ProgressBar progressBar;
+    private FloatingActionButton addAdmin;
 
-    private FloatingActionButton addDoctor;
-
-    public MasterDataListDoctorFragment() {
+    public AdminDataListFragment() {
         // Required empty public constructor
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_master_data_list_doctor, container, false);
+        View view = inflater.inflate(R.layout.fragment_admin_data_list, container, false);
+
         setHasOptionsMenu(false);
-        ((HomeActivity)getActivity()).getSupportActionBar().setTitle("List Dokter");
+        ((HomeActivity)getActivity()).getSupportActionBar().setTitle("List Admin");
         ((HomeActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         bindView(view);
-        getDoctorList();
+        getListAdmin();
 
-        addDoctor.setOnClickListener(new View.OnClickListener() {
+        addAdmin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
                 bundle.putBoolean("isEdit", false);
 
-                MasterDataDoctorInputFragment fragment = new MasterDataDoctorInputFragment();
+                AdminDataInputFragment fragment = new AdminDataInputFragment();
                 fragment.setArguments(bundle);
 
                 getFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_layout_home, fragment, "doctor_input_fragment")
+                        .replace(R.id.fragment_layout_home, fragment, "admin_data_input_fragment")
                         .addToBackStack(null)
                         .commit();
             }
         });
+
         return view;
     }
 
     private void bindView(View view){
-        addDoctor = view.findViewById(R.id.add_doctor);
-        adapter = new DoctorListAdapter(getActivity(), this);
+        addAdmin = view.findViewById(R.id.add_admin);
+        adapter = new AdminListAdapter(getActivity(), this);
 
         progressBar = (ProgressBar)view.findViewById(R.id.progress_bar);
         progressBar.setIndeterminate(true);
         progressBar.getIndeterminateDrawable().setColorFilter(Color.parseColor("#455ede"),android.graphics.PorterDuff.Mode.MULTIPLY);
 
-        recyclerView = view.findViewById(R.id.doctor_list);
+        recyclerView =  (RecyclerView)view.findViewById(R.id.admin_list);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapter);
     }
 
-    private void getDoctorList(){
+    private void getListAdmin(){
         progressBar.setVisibility(View.VISIBLE);
 
         DataApi dataApi = RetrofitBuilder.getApiService().create(DataApi.class);
-        Call<ResponseBody> callDataApi = dataApi.getDokter();
+        Call<ResponseBody> callDataApi = dataApi.getAdmin();
         callDataApi.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -106,30 +107,29 @@ public class MasterDataListDoctorFragment extends Fragment implements DoctorList
                         progressBar.setVisibility(View.GONE);
 
                         JSONArray jsonArray = object.getJSONArray("data");
-                        doctorDataList = new ArrayList<>();
+                        adminList = new ArrayList<>();
 
-                        for (int i = 0; i < jsonArray.length(); i++){
+                        for (int i= 0; i<jsonArray.length();i++){
                             JSONObject jsonObject = jsonArray.getJSONObject(i);
+                            AdminData admin = new AdminData();
+                            admin.setId(jsonObject.getInt("id"));
+                            admin.setUserId(jsonObject.getString("userId"));
+                            admin.setName(jsonObject.getString("name"));
+                            admin.setFirstName(jsonObject.getString("firstName"));
+                            admin.setLastName(jsonObject.getString("lastName"));
+                            admin.setBirthDate( jsonObject.getString("birthDate"));
+                            admin.setBirthPlace(jsonObject.getString("birthPlace"));
+                            admin.setUserRole(jsonObject.getString("userRole"));
+                            admin.setUserStatus(jsonObject.getString("userStatus"));
+                            admin.setAddress(jsonObject.getString("address"));
 
-                            DoctorData doctorData = new DoctorData();
-                            doctorData.setId(jsonObject.getInt("id"));
-                            doctorData.setUserId(jsonObject.getString("userId"));
-                            doctorData.setName(jsonObject.getString("name"));
-                            doctorData.setFirsName(jsonObject.getString("firsName"));
-                            doctorData.setLastName(jsonObject.getString("lastName"));
-                            doctorData.setSpecialization(jsonObject.getString("specialization"));
-                            doctorData.setSpecializationCode(jsonObject.getString("specializationCode"));
-                            doctorData.setSpecializationId(jsonObject.getInt("specializationId"));
-                            doctorData.setAddress(jsonObject.getString("address"));
-
-                            doctorDataList.add(doctorData);
+                            adminList.add(admin);
                         }
 
-                        adapter.setData(doctorDataList);
+                        adapter.setData(adminList);
                     }else {
                         progressBar.setVisibility(View.GONE);
                     }
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
@@ -139,24 +139,23 @@ public class MasterDataListDoctorFragment extends Fragment implements DoctorList
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-
+                progressBar.setVisibility(View.GONE);
             }
         });
     }
 
-
     @Override
-    public void onClick(DoctorData dataPosition) {
+    public void onClick(AdminData dataPositions) {
         Bundle bundle = new Bundle();
-        ArrayList<DoctorData> doctorData = new ArrayList<>();
-        doctorData.add(dataPosition);
-        bundle.putParcelableArrayList(getString(R.string.GET_SELECTED_ITEM), doctorData);
+        ArrayList<AdminData> list = new ArrayList<>();
+        list.add(dataPositions);
+        bundle.putParcelableArrayList(getString(R.string.GET_SELECTED_ITEM), list);
 
-        DoctorDataDetailFragment fragment = new DoctorDataDetailFragment();
+        AdminDataDetailFragment fragment = new AdminDataDetailFragment();
         fragment.setArguments(bundle);
 
         getFragmentManager().beginTransaction()
-                .replace(R.id.fragment_layout_home, fragment, "doctor_data_detail_fragment")
+                .replace(R.id.fragment_layout_home, fragment, "NewFragmentTag")
                 .addToBackStack(null)
                 .commit();
     }

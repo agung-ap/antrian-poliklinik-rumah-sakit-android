@@ -1,15 +1,14 @@
-package id.developer.rs_thamrin.Fragment.user;
+package id.developer.rs_thamrin.Fragment.admin;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -20,41 +19,36 @@ import android.widget.TextView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Date;
 
-import id.developer.rs_thamrin.Fragment.admin.PoliklinikInputFragment;
-import id.developer.rs_thamrin.Fragment.admin.UserApprovalResultFragment;
+import id.developer.rs_thamrin.Fragment.LoginFragment;
 import id.developer.rs_thamrin.R;
 import id.developer.rs_thamrin.activity.HomeActivity;
 import id.developer.rs_thamrin.api.DataApi;
 import id.developer.rs_thamrin.api.RetrofitBuilder;
-import id.developer.rs_thamrin.model.Poliklinik;
-import id.developer.rs_thamrin.model.response.QueueResponse;
-import id.developer.rs_thamrin.util.ConstantUtil;
+import id.developer.rs_thamrin.model.AdminData;
+import id.developer.rs_thamrin.model.DoctorData;
 import id.developer.rs_thamrin.util.GlobalFunction;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-
-public class PoliklinikDetailFragment extends Fragment {
+public class AdminDataDetailFragment extends Fragment {
+    private static final String TAG = AdminDataDetailFragment.class.getName();
     private SharedPreferences preferences;
-    private String userRole, token;
+    private String token, userRole;
 
-    private ArrayList<Poliklinik> poliklinikList = new ArrayList<>();
-    private TextView title ;
-    private TextView time;
-    private TextView doctorName;
-    private TextView kuota;
-
-    public PoliklinikDetailFragment() {
-        // Required empty public constructor
-    }
+    private ArrayList<AdminData> adminDataList = new ArrayList<>();
+    private TextView name ;
+    private TextView birthPlace;
+    private TextView birthDate;
+    private TextView address;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -62,20 +56,20 @@ public class PoliklinikDetailFragment extends Fragment {
         preferences = getActivity().getSharedPreferences(getString(R.string.GET_CREDENTIAL), getContext().MODE_PRIVATE);
         userRole = preferences.getString(getString(R.string.GET_USER_ROLE),"default");
         token = preferences.getString(getString(R.string.GET_USER_TOKEN),"default");
-        poliklinikList = getArguments().getParcelableArrayList(getString(R.string.GET_SELECTED_ITEM));
+        adminDataList = getArguments().getParcelableArrayList(getString(R.string.GET_SELECTED_ITEM));
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_poliklinik_detail, container, false);
-
-        setHasOptionsMenu(false);
-        ((HomeActivity)getActivity()).getSupportActionBar().setTitle(poliklinikList.get(0).getPoliklinikName());
+        View view = inflater.inflate(R.layout.fragment_admin_data_detail, container, false);
+        ((HomeActivity)getActivity()).getSupportActionBar().setTitle("Detail");
         ((HomeActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setHasOptionsMenu(true);
 
+        Log.i(TAG, "admin list data : " + adminDataList.get(0).getName());
         bindView(view);
         setData();
 
@@ -83,50 +77,50 @@ public class PoliklinikDetailFragment extends Fragment {
     }
 
     private void bindView(View view){
-        title = (TextView)view.findViewById(R.id.title_detail);
-        time = (TextView)view.findViewById(R.id.time_detail);
-        doctorName = (TextView)view.findViewById(R.id.doctor_name_detail);
-        kuota = (TextView)view.findViewById(R.id.kuota_detail);
+        name = (TextView)view.findViewById(R.id.admin_name_detail);
+        birthPlace = (TextView)view.findViewById(R.id.birth_place_detail);
+        birthDate = (TextView)view.findViewById(R.id.birth_date_detail);
+        address = (TextView)view.findViewById(R.id.address_detail);
     }
 
     private void setData(){
-        title.setText(poliklinikList.get(0).getPoliklinikName());
-        time.setText(poliklinikList.get(0).getTime());
-        doctorName.setText(poliklinikList.get(0).getDoctorName());
-        kuota.setText(String.valueOf(poliklinikList.get(0).getKuota()));
+        try {
+            Date d = new SimpleDateFormat("yyyy-MM-dd").parse(adminDataList.get(0).getBirthDate());
+            birthDate.setText(new SimpleDateFormat("dd MMM yyyy").format(d));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        name.setText(adminDataList.get(0).getName());
+        birthPlace.setText(adminDataList.get(0).getBirthPlace());
+        address.setText(adminDataList.get(0).getAddress());
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        if (userRole.equals("ADMIN")){
-            if (menu != null){
-                menu.clear();
-            }
-
-            inflater.inflate(R.menu.list_menu, menu);
-            super.onCreateOptionsMenu(menu, inflater);
-        }else {
-            if (menu != null){
-                menu.clear();
-            }
+        if (menu != null){
+            menu.clear();
         }
 
+        inflater.inflate(R.menu.list_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
     }
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.edit_menu :
-                sendResponseToAnotherFragment(poliklinikList);
+                sendResponseToAnotherFragment(adminDataList);
                 break;
             case R.id.delete_menu :
-                String info = "Apakah anda yakin akan menghapus " + poliklinikList.get(0).getPoliklinikName();
+                String info = "Apakah anda yakin akan menghapus data Admin " + adminDataList.get(0).getName();
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 builder.setMessage(info);
 
-                builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                builder.setPositiveButton("Hapus", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        poliklinikDelete(poliklinikList.get(0).getId());
+                        dokterAdmin(adminDataList.get(0).getId());
                     }
                 });
 
@@ -143,14 +137,14 @@ public class PoliklinikDetailFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
-    private void poliklinikDelete(long id){
+    private void dokterAdmin(long id){
         ProgressDialog progressDialog = new ProgressDialog(getActivity());
-        progressDialog.setMessage("Menghapus " + poliklinikList.get(0).getPoliklinikName());
+        progressDialog.setMessage("Menghapus data Admin " + adminDataList.get(0).getName());
         progressDialog.show();
         progressDialog.setCanceledOnTouchOutside(false);
 
         DataApi dataApi = RetrofitBuilder.getApiService().create(DataApi.class);
-        Call<ResponseBody> callDataApi = dataApi.deletePoliklinik(id, token);
+        Call<ResponseBody> callDataApi = dataApi.deleteAdmin(id, token);
         callDataApi.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -168,7 +162,7 @@ public class PoliklinikDetailFragment extends Fragment {
                             manager.popBackStack(first.getId(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
                         }
 
-                        trans.remove(new PoliklinikDetailFragment());
+                        trans.remove(new DoctorDataDetailFragment());
                         trans.commit();
                     }else {
                         progressDialog.dismiss();
@@ -188,16 +182,16 @@ public class PoliklinikDetailFragment extends Fragment {
         });
     }
 
-    private void sendResponseToAnotherFragment(ArrayList<Poliklinik> response){
+    private void sendResponseToAnotherFragment(ArrayList<AdminData> response){
         Bundle bundle = new Bundle();
         bundle.putBoolean("isEdit", true);
         bundle.putParcelableArrayList(getString(R.string.GET_SELECTED_ITEM), response);
 
-        PoliklinikInputFragment fragment = new PoliklinikInputFragment();
+        AdminDataInputFragment fragment = new AdminDataInputFragment();
         fragment.setArguments(bundle);
 
         getFragmentManager().beginTransaction()
-                .replace(R.id.fragment_layout_home, fragment, "poliklinik_register_result_fragment")
+                .replace(R.id.fragment_layout_home, fragment, "admin_edit_result_fragment")
                 .addToBackStack(null)
                 .commit();
     }
