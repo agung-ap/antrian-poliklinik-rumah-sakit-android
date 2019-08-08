@@ -19,8 +19,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
-            android:hint="User Id"
-            android:inputType="number"
+            android:hint="No Antrian"
+            android:inputType="textCapSentences"
             android:textColor="@color/md_black_1000"
             android:textColorHint="@color/md_blue_700" />
     </android.support.design.widget.TextInputLayout>
@@ -36,7 +36,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginBottom="8dp"
         android:background="@color/md_blue_700"
-        android:text="Approve"
+        android:text="Validasi"
         android:textColor="@android:color/white"
         android:textStyle="bold"/>
 

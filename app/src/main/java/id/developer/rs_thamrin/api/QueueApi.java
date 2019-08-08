@@ -22,6 +22,10 @@ public interface QueueApi {
     Call<ResponseBody> callPatien(@Query("token") String token,
                                   @Query("userId") String userId);
 
+    @POST("/queue/queueCheck")
+    Call<ResponseBody> checkingQueueNumber(@Query("token") String token,
+                                           @Query("queueNumber") String queueNumber);
+
     @DELETE("/queue/done")
     Call<ResponseBody> doneChecking(@Query("token") String token,
                                     @Query("userId") String userId);

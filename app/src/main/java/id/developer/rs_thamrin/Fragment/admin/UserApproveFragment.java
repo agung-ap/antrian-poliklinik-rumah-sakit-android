@@ -22,6 +22,7 @@ import id.developer.rs_thamrin.Fragment.user.PoliklinikRegisterResultFragment;
 import id.developer.rs_thamrin.R;
 import id.developer.rs_thamrin.activity.HomeActivity;
 import id.developer.rs_thamrin.api.LoginApi;
+import id.developer.rs_thamrin.api.QueueApi;
 import id.developer.rs_thamrin.api.RegisterApi;
 import id.developer.rs_thamrin.api.RetrofitBuilder;
 import id.developer.rs_thamrin.model.request.UserApproveRequest;
@@ -63,7 +64,13 @@ public class UserApproveFragment extends Fragment {
         setHasOptionsMenu(false);
 
         bindView(view);
-        handleApprove();
+        approve.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                handleApprove();
+            }
+        });
+
 
         return view;
     }
@@ -74,31 +81,22 @@ public class UserApproveFragment extends Fragment {
     }
 
     private void handleApprove(){
-        UserApproveRequest request = new UserApproveRequest();
-        request.setUserId(userId.getText().toString().trim());
-        request.setToken(token);
-
-        RegisterApi registerApi = RetrofitBuilder.getApiService().create(RegisterApi.class);
-        Call<ResponseBody> callRegisterApi = registerApi.setApprove(request);
-        callRegisterApi.enqueue(new Callback<ResponseBody>() {
+        QueueApi queueApi = RetrofitBuilder.getApiService().create(QueueApi.class);
+        Call<ResponseBody> callQueueApi = queueApi.checkingQueueNumber(token, userId.getText().toString().trim());
+        callQueueApi.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
                     JSONObject object = new JSONObject(response.body().string());
 
                     if (object.getInt("code") == 0){
-                        JSONObject jsonObject = new JSONObject("data");
-
                         UserApprovalResponse approvalResponse = new UserApprovalResponse();
                         approvalResponse.setInfo(object.getString("info"));
-                        approvalResponse.setName(jsonObject.getString("name"));
-                        approvalResponse.setUserId(jsonObject.getString("userId"));
-                        approvalResponse.setUserStatus(jsonObject.getString("userStatus"));
 
                         sendResponseToAnotherFragment(approvalResponse);
+                    }else {
+                        GlobalFunction.toast(getActivity(), object.getString("info"));
                     }
-
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 } catch (IOException e) {

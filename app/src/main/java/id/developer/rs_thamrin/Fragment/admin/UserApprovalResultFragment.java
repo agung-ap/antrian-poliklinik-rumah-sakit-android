@@ -44,7 +44,7 @@ public class UserApprovalResultFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_user_approval_result, container, false);
-        ((HomeActivity)getActivity()).getSupportActionBar().setTitle("Success");
+        ((HomeActivity)getActivity()).getSupportActionBar().setTitle("Validasi Antrian");
         ((HomeActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
         bindView(view);
@@ -72,14 +72,14 @@ public class UserApprovalResultFragment extends Fragment {
     private void bindView(View view){
         home = view.findViewById(R.id.home);
 
-        info = view.findViewById(R.id.info);
-        name = view.findViewById(R.id.name);
-        userId = view.findViewById(R.id.user_id);
-        userStatus = view.findViewById(R.id.user_status);
+        info = view.findViewById(R.id.message);
+//        name = view.findViewById(R.id.name);
+//        userId = view.findViewById(R.id.user_id);
+//        userStatus = view.findViewById(R.id.user_status);
 
         info.setText(responses.get(0).getInfo());
-        name.setText(responses.get(0).getName());
-        userId.setText(responses.get(0).getUserId());
-        userStatus.setText(responses.get(0).getUserStatus());
+//        name.setText(responses.get(0).getName());
+//        userId.setText(responses.get(0).getUserId());
+//        userStatus.setText(responses.get(0).getUserStatus());
     }
 }

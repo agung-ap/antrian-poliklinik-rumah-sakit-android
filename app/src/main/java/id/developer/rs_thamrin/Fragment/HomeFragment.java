@@ -59,7 +59,7 @@ public class HomeFragment extends Fragment implements HomeAdapter.Listener{
     private String[] userTitle = {"Pendaftaran Poliklinik", "Lihat Poliklinik"};
     private int[] userIcon = {R.drawable.ic_poliklinik_regis, R.drawable.ic_poliklinik_list};
 
-    private String[] adminTitle = {"Poliklinik list", "Master Data Admin", "User Approve", "Master Data Dokter"};
+    private String[] adminTitle = {"Poliklinik list", "Master Data Admin", "Validasi Antrian", "Master Data Dokter"};
     private int[] adminIcon = {R.drawable.ic_poliklinik_list, R.drawable.ic_master_data, R.drawable.ic_user_approve, R.drawable.ic_master_data_doctor};
 
     private String[] dokterTitle = {"Antrian Poliklinik"};
